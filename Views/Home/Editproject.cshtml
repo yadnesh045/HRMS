@@ -61,7 +61,7 @@
 
             <!-- Main content -->
             <section class="content">
-                <form asp-action="Addproject" asp-controller="Home" method="post">
+                <form asp-action="Editproject" asp-controller="Home" method="post">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="card card-primary">
@@ -77,15 +77,25 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="inputName">Project Name</label>
-                                        <input name="ProjectName" type="text" id="inputName" class="form-control">
+                                        <input name="ProjectName" type="text" id="inputName" class="form-control" placeholder="@Model.ProjectName" value="@Model.ProjectName">
+                                    </div>
+
+                                    <div class="form-group" hidden>
+                                        <label for="inputName">Project Name</label>
+                                        <input name="id" type="text" id="inputName" class="form-control" placeholder="@Model.id" value="@Model.id">
+                                    </div>
+
+                                    <div class="form-group" hidden>
+                                        <label for="inputName">Project Name</label>
+                                        <input name="CreatedDate" type="text" id="inputName" class="form-control"  value="@Model.CreatedDate">
                                     </div>
                                     <div class="form-group">
                                         <label for="inputDescription">Project Description</label>
-                                        <textarea name="ProjectDescription" id="inputDescription" class="form-control" rows="4"></textarea>
+                                        <textarea name="ProjectDescription" id="inputDescription" class="form-control" rows="4" value="@Model.ProjectDescription"></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="inputStatus">Status</label>
-                                        <select name="Status" id="inputStatus" class="form-control custom-select">
+                                        <select name="Status" id="inputStatus" class="form-control custom-select" >
                                             <option selected disabled>Select one</option>
                                             <option>On Hold</option>
                                             <option>Canceled</option>
@@ -94,11 +104,15 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="inputClientCompany">Client Company</label>
-                                        <input name="ClientCompany" type="text" id="inputClientCompany" class="form-control">
+                                        <input readonly name="ClientCompany" type="text" id="inputClientCompany" class="form-control" value="@Model.ClientCompany">
                                     </div>
                                     <div class="form-group">
                                         <label for="inputProjectLeader">Project Leader</label>
-                                        <input name="ProjectLeader" type="text" id="inputProjectLeader" class="form-control">
+                                        <input readonly name="ProjectLeader" type="text" id="inputProjectLeader" class="form-control" value="@Model.ProjectLeader">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputSpentBudget">Project Progress</label>
+                                        <input name="ProjectProgress" type="number" id="inputSpentBudget" class="form-control" value="@Model.ProjectProgress">
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -119,15 +133,15 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="inputEstimatedBudget">Estimated budget</label>
-                                        <input name="Estimatedbudget" type="number" id="inputEstimatedBudget" class="form-control">
+                                        <input readonly name="Estimatedbudget" type="number" id="inputEstimatedBudget" class="form-control" value="@Model.Estimatedbudget">
                                     </div>
                                     <div class="form-group">
                                         <label for="inputSpentBudget">Total amount spent</label>
-                                        <input name="Totalamountspent" type="number" id="inputSpentBudget" class="form-control">
+                                        <input  name="Totalamountspent" type="number" id="inputSpentBudget" class="form-control" value="@Model.Totalamountspent">
                                     </div>
                                     <div class="form-group">
                                         <label for="inputEstimatedDuration">Estimated project duration</label>
-                                        <input name="Estimatedprojectduration" type="number" id="inputEstimatedDuration" class="form-control">
+                                        <input readonly name="Estimatedprojectduration" type="number" id="inputEstimatedDuration" class="form-control" value="@Model.Estimatedprojectduration">
                                     </div>
                                 </div>
                                 <!-- /.card-body -->
@@ -138,7 +152,7 @@
                     <div class="row">
                         <div class="col-12">
                             <a href="#" class="btn btn-secondary">Cancel</a>
-                            <input type="submit" value="Create new Project" class="btn btn-success float-right">
+                            <input type="submit" value="Update Project" class="btn btn-success float-right">
                         </div>
                     </div>
                 </form>
