@@ -28,5 +28,20 @@ namespace HRMS.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
+
+        /*---------------------------------------------Project-----------------------------------------------------*/
+        public IActionResult ViewProject()
+        {
+            return View();
+        }
+
+
+        public IActionResult AddProject()
+        {
+            return View();
+        }
+
+
     }
 }
