@@ -16,5 +16,7 @@ namespace HRMS.Data
         public DbSet<User> Users { get; set; }
 
         public DbSet<Assistant> Assistants { get; set; }
+
+        public DbSet<Position> Positions { get; set; }  
     }
 }
