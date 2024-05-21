@@ -94,7 +94,7 @@ namespace HRMS.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("HRMS.Models.Role", b =>
+            
             modelBuilder.Entity("HRMS.Models.Roles", b =>
                 {
                     b.Property<int>("Id")

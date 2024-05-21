@@ -8,9 +8,15 @@ namespace HRMS.Repository
     {
         private readonly ApplicationDbContext _db;
         public IProjectRepository project { get; set; }
+        public IRolesRepository Roles { get; set; }
+        public IUsersRepository Users { get; set; }
+        public IUserRoleRepository UserRole { get; set; }
         public UnitOfWork(ApplicationDbContext _db)
         {
             project = new ProjectRepository(_db);
+            Users = new UserRepository(_db);
+            Roles = new RolesRepository(_db);
+            UserRole = new UserRoleRepository(_db);
             this._db = _db;
 
         }

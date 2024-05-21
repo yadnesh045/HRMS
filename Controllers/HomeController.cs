@@ -31,7 +31,7 @@ namespace HRMS.Controllers
         [HttpGet]
         public IActionResult CreateRole()
         {
-            var roles = _context.Roles.ToList();
+            var roles = unitofworks.Roles.GetAll().ToList();
 
             return View(roles);
         }
@@ -48,8 +48,8 @@ namespace HRMS.Controllers
                     Description = role.Description
                 };
 
-                _context.Roles.Add(newRole);
-                _context.SaveChanges();
+                unitofworks.Roles.Add(newRole);
+                unitofworks.Save();
                 return RedirectToAction("CreateRole");
             }
             return View();
@@ -59,7 +59,7 @@ namespace HRMS.Controllers
         [HttpGet]
         public IActionResult AssignRoles()
         {
-            var users = _context.Users.ToList();
+            var users = unitofworks.Users.GetAll().ToList();
 
             return View(users);
        
@@ -68,8 +68,9 @@ namespace HRMS.Controllers
         [HttpGet]
         public IActionResult AssignUserRoles(int id)
         {
-            var roles = _context.Roles.ToList();
-            var user = _context.Users.FirstOrDefault(x => x.Id == id);
+            var roles = unitofworks.Roles.GetAll().ToList();
+            var user = unitofworks.Users.GetById(id);
+               
 
             ViewBag.Roles = roles;
 
@@ -82,19 +83,20 @@ namespace HRMS.Controllers
         {
             if (ModelState.IsValid)
             {
-                var existingUserRole = _context.UserRoles.FirstOrDefault(x => x.Email == userRole.Email);
 
+                var existingUserRole = unitofworks.UserRole.GetByEmail(userRole.Email);
+               
                 if (existingUserRole != null)
                 {
                     existingUserRole.RoleType = userRole.RoleType;
-                    _context.UserRoles.Update(existingUserRole);
+                    unitofworks.UserRole.Update(existingUserRole);
                 }
                 else
                 {
-                    _context.UserRoles.Add(userRole);
+                    unitofworks.UserRole.Add(userRole);
                 }
 
-                _context.SaveChanges();
+                unitofworks.Save();
                 return RedirectToAction("AssignRoles");
             }
             return View(userRole);
