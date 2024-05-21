@@ -2,7 +2,7 @@
 
 namespace HRMS.Models
 {
-    public class Role
+    public class UserRole
     {
         [Key]
         public int Id { get; set; }
