@@ -39,6 +39,15 @@ namespace HRMS.Controllers
         }
 
 
+        [HttpGet]
+        public IActionResult ViewAssets()
+        {
+            var view = _context.Assets.ToList();    
+            return View(view);
+        }
+
+
+
 
     }
     }
