@@ -17,5 +17,13 @@ namespace HRMS.Data
         public DbSet<Project> Projects { get; set; }
 
         public DbSet<Assistant> Assistants { get; set; }
+
+        public DbSet<Position> Positions { get; set; }  
+
+        public DbSet<Assets> Assets { get; set; }   
+
+        public DbSet<Roles> Roles { get; set; }
+
+
     }
 }
