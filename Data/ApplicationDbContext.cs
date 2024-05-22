@@ -20,9 +20,7 @@ namespace HRMS.Data
 
         public DbSet<Position> Positions { get; set; }  
 
-        public DbSet<Assets> Assets { get; set; }   
-
-        public DbSet<Roles> Roles { get; set; }
+  
 
     }
 }
