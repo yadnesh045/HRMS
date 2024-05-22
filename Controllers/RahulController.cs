@@ -25,7 +25,7 @@ namespace HRMS.Controllers
 
                 _context.Positions.Add(obj);
                 _context.SaveChanges();
-                return View();
+                return RedirectToAction("ViewPosition", "Rahul");
             }
             return View(obj);
 
@@ -37,6 +37,7 @@ namespace HRMS.Controllers
             var view=_context.Positions.ToList();
             return View(view);
         }
+
 
 
     }
