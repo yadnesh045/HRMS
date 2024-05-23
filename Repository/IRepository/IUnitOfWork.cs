@@ -9,6 +9,8 @@
         IUserRoleRepository UserRole { get; set; }
 
         IRec_CandidateRepository Candidate { get; set; }
+
+        IRec_ShortListeCandidateRepository ShortListed { get; set; }
         void Save();
     }
 }

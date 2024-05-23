@@ -118,7 +118,6 @@ namespace HRMS.Controllers
                 ViewBag.Error = "INVALID CREDENTIALS";
             }
             return View();
-
         }
 
         [HttpGet]
@@ -141,7 +140,7 @@ namespace HRMS.Controllers
                 FullName = EnteredFullName,
                 Email = EnteredEmail,
                 Password = EnteredPassword,
-                ConfirmPasswords = EnteredConfirmPassword
+                ConfirmPassword = EnteredConfirmPassword
             };
 
             var role = new UserRole
@@ -157,6 +156,15 @@ namespace HRMS.Controllers
 
             return RedirectToAction("Login");
         }
+
+
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            return RedirectToAction("Login");
+        }
+
 
 
     }

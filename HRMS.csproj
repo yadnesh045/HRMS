@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
     <PackageReference Include="CsvHelper" Version="32.0.3" />
     <PackageReference Include="ExcelDataReader" Version="3.7.0-develop00385" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
@@ -15,11 +16,20 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\Uploads\" />
     <Folder Include="wwwroot\Resume\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Db_Images\MastersCertificates\" />
+    <Folder Include="wwwroot\Db_Images\BachelorsCertificates\" />
+    <Folder Include="wwwroot\Db_Images\AadharCards\" />
+    <Folder Include="wwwroot\Db_Images\Photos\" />
+    <Folder Include="wwwroot\Db_Images\Resumes\" />
   </ItemGroup>
 
 </Project>
