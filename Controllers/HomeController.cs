@@ -294,11 +294,44 @@ namespace HRMS.Controllers
         [HttpPost]
         public IActionResult ShortList(int id)
         {
+            var candidate = unitofworks.Candidate.GetById(id);
 
+            if(candidate != null)
+            {
 
+                var Shortlist = new ShorList
+                {
+                    Firstname = candidate.Firstname,
+                    Lastname = candidate.Lastname,
+                    Resumeurl = candidate.Resumeurl,
+                    Phone = candidate.Phone,
+                    Address = candidate.Address,
+                    Email = candidate.Email,
+                    Experince = candidate.Experince
+                };
+
+                unitofworks.ShortListed.Add(Shortlist);
+
+                unitofworks.Candidate.Remove(candidate);
+                unitofworks.Save();
+                TempData["Success"] = "ShotListed";
+                return RedirectToAction("ManageCandidates", "Home");
+
+            }
+
+            TempData["Error"] = "Error Occured";
             return RedirectToAction("ManageCandidates" , "Home");
         }
 
+
+
+        [HttpGet]
+        public IActionResult ViewShortlistedCandidates()
+        {
+
+            var Short = unitofworks.ShortListed.GetAll().ToList();
+            return View(Short);
+        }
 
 
 

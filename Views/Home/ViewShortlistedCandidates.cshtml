@@ -2,7 +2,7 @@
     Layout = null;
 }
 
-@model List<HRMS.Models.Rec_Candidate>
+@model List<HRMS.Models.ShorList>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +48,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>DataTables</h1>
+                            <h1>ShortListed Candidates</h1>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
@@ -61,7 +61,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">DataTable with default features</h3>
+                                    <h3 class="card-title">ShortListed Candidates Schedule Interviews</h3>
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
@@ -75,16 +75,16 @@
                                                 <th>Address</th>
                                                 <th>Experince</th>
                                                 <th>Resume</th>
-                                                <th>Action</th>
+                                                <th>Schedule Interview</th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                             @foreach (var candidate in Model)
                                             {
-                                                
-                                        <tr>
-                                            <td>@candidate.Firstname</td>
+
+                                                <tr>
+                                                    <td>@candidate.Firstname</td>
                                                     <td>@candidate.Lastname</td>
                                                     <td>@candidate.Email</td>
                                                     <td>@candidate.Phone</td>
@@ -94,12 +94,11 @@
                                                     <td>
                                                         <a style="margin-left:35px;font-size:25px;" target="_blank" href="@candidate.Resumeurl" class="bi bi-file-earmark-arrow-down-fill">
                                                     </td>
-                                                    <td>
-                                                        <button class="btn btn-primary shortlist-button" data-id="@candidate.id">ShortList</button>
 
-                                                        <button class="buttons btn-Danger">Reject</button>
+                                                    <td>
+                                                        <a style="margin-left:35px;font-size:25px;" target="_blank" href="@candidate.Resumeurl" class="bi bi-cup-hot-fill">
                                                     </td>
-                                        </tr>
+                                                </tr>
 
                                             }
 
