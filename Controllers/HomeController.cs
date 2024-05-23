@@ -2,6 +2,7 @@ using HRMS.Data;
 using HRMS.Models;
 using HRMS.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics;
 
 namespace HRMS.Controllers
@@ -63,7 +64,7 @@ namespace HRMS.Controllers
             var users = unitofworks.Users.GetAll().ToList();
 
             return View(users);
-       
+
         }
 
         [HttpGet]
@@ -71,7 +72,7 @@ namespace HRMS.Controllers
         {
             var roles = unitofworks.Roles.GetAll().ToList();
             var user = unitofworks.Users.GetById(id);
-               
+
 
             ViewBag.Roles = roles;
 
@@ -86,7 +87,7 @@ namespace HRMS.Controllers
             {
 
                 var existingUserRole = unitofworks.UserRole.GetByEmail(userRole.Email);
-               
+
                 if (existingUserRole != null)
                 {
                     existingUserRole.RoleType = userRole.RoleType;
@@ -129,7 +130,7 @@ namespace HRMS.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
 
         /*---------------------------------------------Project-----------------------------------------------------*/
         public IActionResult ViewProject()
@@ -148,7 +149,7 @@ namespace HRMS.Controllers
         public IActionResult AddProject(Project obj)
         {
 
-            if(obj is not null)
+            if (obj is not null)
             {
 
                 var Pj = new Project()
@@ -173,7 +174,7 @@ namespace HRMS.Controllers
                 unitofworks.Save();
 
 
-                return RedirectToAction("ViewProject","Home");
+                return RedirectToAction("ViewProject", "Home");
             }
 
 
@@ -192,7 +193,7 @@ namespace HRMS.Controllers
         {
             var project = unitofworks.project.GetById(OBJ.id);
 
-            if(project is not null)
+            if (project is not null)
             {
 
                 project.ProjectName = OBJ.ProjectName;
@@ -223,6 +224,198 @@ namespace HRMS.Controllers
             var project = unitofworks.project.GetById(id);
             return View(project);
         }
+
+
+        //---------------------------------------Adding user -------------------------------------------------//
+
+        [HttpGet]
+        public IActionResult AddUser()
+        {
+            var roles = unitofworks.Roles.GetAll().ToList();
+            ViewBag.Roles = roles;
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddUser(User user)
+        {
+            if (ModelState.IsValid)
+            {
+                var newUser = new User
+                {
+                    EmployeeId = GenerateEmployeeID(),
+                    FullName = user.FullName,
+                    Contact = user.Contact,
+                    DateOfBirth = user.DateOfBirth,
+                    AadharNumber = user.AadharNumber,
+                    PancardNumber = user.PancardNumber,
+                    Email = user.Email,
+                    Address = user.Address,
+
+
+                    PreviousCompanyName = user.PreviousCompanyName,
+                    PreviousCompanyJobTitle = user.PreviousCompanyJobTitle,
+                    PreviousCompanyJoiningDate = user.PreviousCompanyJoiningDate,
+                    PreviousCompanyLeavingDate = user.PreviousCompanyLeavingDate,
+                    PreviousCompanyCTC = user.PreviousCompanyCTC,
+
+
+                    MastersEducation = user.MastersEducation,
+                    MastersUniversity = user.MastersUniversity,
+                    BachelorsEducation = user.BachelorsEducation,
+                    BachelorsUniversity = user.BachelorsUniversity,
+
+                    Role = user.Role,
+                    JobDescription = user.JobDescription,
+                    CurrentCTC = user.CurrentCTC,
+                    HouseRentAllowance = user.HouseRentAllowance,
+                    TravelAllowance = user.TravelAllowance,
+                    SpecialAllowance = user.SpecialAllowance,
+
+                    BankName = user.BankName,
+                    AccountHolderName = user.AccountHolderName,
+                    AccountNumber = user.AccountNumber,
+                    IFSCCode = user.IFSCCode,
+                    BranchName = user.BranchName,
+
+                    Password = GeneratePassword(),
+                    ConfirmPassword= user.Password
+                };
+
+
+
+                if (user.MastersCertificate != null)
+                {
+
+                    var file = user.MastersCertificate;
+                    var fileName = Guid.NewGuid().ToString() + file.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "MastersCertificates", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    newUser.MastersCertificateURL = Path.Combine("/Db_Images", "MastersCertificates", fileName).Replace("\\", "/"); ;
+
+
+                }
+                if (user.BachelorsCertificate != null)
+                {
+                    var file = user.BachelorsCertificate;
+                    var fileName = Guid.NewGuid().ToString() + file.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "BachelorsCertificates", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    newUser.BachelorsCertificateURL = Path.Combine("/Db_Images", "BachelorsCertificates", fileName).Replace("\\", "/"); ;
+
+                }
+                if (user.Resume != null)
+                {
+                    var file = user.Resume;
+                    var fileName = Guid.NewGuid().ToString() + file.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "Resumes", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    newUser.ResumeURL = Path.Combine("/Db_Images", "Resumes", fileName).Replace("\\", "/"); ;
+
+                }
+                if (user.AadharCard != null)
+                {
+                    var file = user.AadharCard;
+                    var fileName = Guid.NewGuid().ToString() + file.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "AadharCards", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    newUser.AadharCardURL = Path.Combine("/Db_Images", "AadharCards", fileName).Replace("\\", "/"); ;
+
+                }
+                if (user.Photo != null)
+                {
+                    var file = user.Photo;
+                    var fileName = Guid.NewGuid().ToString() + file.FileName;
+                    var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "Photos", fileName);
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+                    newUser.PhotoURL = Path.Combine("/Db_Images", "Photos", fileName).Replace("\\", "/"); ;
+
+                }
+
+
+                var userRole = new UserRole
+                {
+                    Email = user.Email,
+                    RoleType = user.Role
+                };
+
+
+
+
+                unitofworks.Users.Add(newUser);
+                unitofworks.UserRole.Add(userRole);
+                unitofworks.Save();
+                return Json(new
+                {
+                    success = true,
+                    message = "User added successfully"
+                });
+
+            }
+
+
+
+            return View();
+        }
+
+        private int GenerateEmployeeID()
+        {
+            Random random = new Random();
+            int id = random.Next(1000000000, 2000000000);
+            return id;
+        }
+
+        private string GeneratePassword()
+        {
+            const string alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string numbers = "0123456789";
+            const string symbols = "!@#$%^&*()_+-=[]{}|;:,.<>?";
+
+            Random random = new Random();
+
+            // Ensure at least one character from each category
+            char[] password = new char[10];
+            password[0] = alphabet[random.Next(alphabet.Length)];
+            password[1] = numbers[random.Next(numbers.Length)];
+            password[2] = symbols[random.Next(symbols.Length)];
+
+            // Fill the rest of the password with random characters from all categories
+            string allChars = alphabet + numbers + symbols;
+            for (int i = 3; i < password.Length; i++)
+            {
+                password[i] = allChars[random.Next(allChars.Length)];
+            }
+
+            // Shuffle the array to ensure random order
+            for (int i = 0; i < password.Length; i++)
+            {
+                int swapIndex = random.Next(password.Length);
+                char temp = password[i];
+                password[i] = password[swapIndex];
+                password[swapIndex] = temp;
+            }
+
+            // Convert to string and trim to the desired length (between 6 and 10)
+            int passwordLength = random.Next(6, 11);
+            return new string(password).Substring(0, passwordLength);
+        }
+
 
 
         /*---------------------------------------------Project-----------------------------------------------------*/
