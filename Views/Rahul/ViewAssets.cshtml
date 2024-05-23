@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->roottuyhy
+    <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">
+    <!-- Theme style -->
 
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
 </head>
@@ -38,120 +39,305 @@
 
 
 
+
+
+
+
+        @{
+            ViewBag.Title = "Total Assets";
+            int totalAssets = ViewBag.TotalAssets ?? 0; // Default to 0 if ViewBag.TotalAssets is null
+        }
+
+
+
+
+
+
+
+
+        @* ------------------------------------------- *@
+
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
-            <section class="content-header">
+            <div class="content-header">
                 <div class="container-fluid">
                     <div class="row mb-2">
-                        <div class="col-sm-6">
-
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-lg">
-                                Add Position
-                            </button>
-
-                            <h1>Simple Tables</h1>
-                        </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Simple Tables</li>
-                            </ol>
-                        </div>
-                    </div>
+                    </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
-            </section>
+            </div>
 
+            <!-- /.content-header -->
             <!-- Main content -->
             <section class="content">
                 <div class="container-fluid">
+
+                    <!-- Small boxes (Stat box) -->
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Bordered Table</h3>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 10px">id<th><
-                                                <th>Position Name</th>
-                                                <th>Description</th>
-                                                <th style="width: 40px">Label</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var position in Model)
-                                            {
-                                                <tr>
-                                                    @* <td>@position.Id</td>
-                                                    <td>@position.position_name</td>
-                                                    <td>@position.desciption</td> *@
-                                                </tr>
-                                            }
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3>@totalAssets</h3>
 
-                                        </tbody>
-                                    </table>
+                                    <p>Total No Assets</p>
                                 </div>
-                                <!-- /.card-body -->
-                                <!-- /.card-body -->
+                                <div class="icon">
+                                    <i class="ion ion-bag"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
-                            <!-- /.card -->
                         </div>
-                    </div>
-                    <!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </section>
-            <!-- /.content -->
-        </div>
+                        <!-- ./col -->
+                        <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-success">
+                                <div class="inner">
+                                    <h3>53<sup style="font-size: 20px">%</sup></h3>
 
-
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="modal-lg">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Large Modal</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>One fine body&hellip;</p>
-                        <form method="POST" asp-action="Addposition" asp-controller="Rahul">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <label>Position Name: </label>
-                                    <input type="text" class="form-control" placeholder="Position Name:" name="position_name">
-                                    @* <span asp-validation-for="position_name" class="text-danger"></span> *@
+                                    <p>Total  Available Assets </p>
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputPassword1">Description</label>
-                                    <input type="text" class="form-control" placeholder="Desciption" name="desciption">
-                                    @* <span asp-validation-for="desciption" class="text-danger"></span> *@
+                                <div class="icon">
+                                    <i class="ion ion-stats-bars"></i>
                                 </div>
-
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                                </div>
                             </div>
-                            <!-- /.card-body -->
+                       
 
-                            <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="col-lg-3 col-6">
+                            <!-- small box -->
+                            <div class="small-box bg-warning">
+                                <div class="inner">
+                                    <h3>44</h3>
+
+                                    <p>Total Allocated Assets</p>
+                                </div>
+                                <div class="icon">
+                                    <i class="ion ion-person-add"></i>
+                                </div>
+                                <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                             </div>
-                        </form>
+                        </div>
+
                     </div>
-                    <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+
                     </div>
+
+
+
+
+
+
+                    @* --------------------------------------------- *@
+
+
+
+                    <div class="content-wrapper">
+                        <!-- Content Header (Page header) -->
+                        <section class="content-header">
+                            <div class="container-fluid">
+                                <div class="row mb-2">
+                                    <!-- Add your header content here if needed -->
+                                </div>
+                            </div><!-- /.container-fluid -->
+                        </section>
+
+                        <!-- Main content -->
+                        <section class="content">
+                            <div class="container-fluid">
+                                <div class="row justify-content-center">
+                                    <!-- Center the row -->
+                                    <div class="col-12">
+                                        <!-- Adjust column width to full -->
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h3 class="card-title">Bordered Table</h3>
+                                                <!-- Add Assets button in the upper right side corner in blue color -->
+                                                <div class="float-right">
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-lg">
+                                                        Add Assets
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <!-- /.card-header -->
+                                            <div class="card-body">
+                                                <table class="table table-bordered w-100">
+                                                    <!-- Ensure the table takes full width -->
+                                                    <thead>
+                                                        <tr>
+                                                            <th>id</th>
+                                                            <th>Asset Name</th>
+                                                            <th>Category</th>
+                                                            <th>Description</th>
+                                                            <th>Serial Number</th>
+                                                            <th>Quantity</th>
+                                                            <th>Allocated</th>
+                                                            <th>Available</th>
+                                                            <th>Edit</th>
+                                                            <th>Delete</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach (var position in Model)
+                                                        {
+                                                            <tr>
+                                                                <td>@position.id</td>
+                                                                <td>@position.asset_name</td>
+                                                                <td>@position.category</td>
+                                                                <td>@position.description</td>
+                                                                <td>@position.serial_number</td>
+                                                                <td>@position.quantitiy</td>
+                                                                <td>Allocated</td>
+                                                                <td>Available</td>
+                                                                <td>
+                                       
+
+                                                                    
+
+                                                                    <a class="btn btn-sm btn-warning edit-asset" data-toggle="modal" data-target="#modal-lg1" data-asset-id="@position.id">Edit</a>
+
+                                                                </td>
+                                                                <td>
+                                                                    <a asp-action="delete" asp-controller="Rahul" class="btn btn-sm btn-danger" asp-route-id="@position.id">delete</a>
+
+                                                               
+                                                                </td>
+                                                                
+
+
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!-- /.card-body -->
+                                        </div>
+                                        <!-- /.card -->
+                                    </div>
+                                </div>
+                                <!-- /.row -->
+                            </div><!-- /.container-fluid -->
+                        </section>
+                        <!-- /.content -->
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal-lg">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add Assets</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="POST" asp-action="AddAssets" asp-controller="Rahul">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label>Asset Name: </label>
+                                                <input type="text" class="form-control" placeholder="Enter Asset Name:" name="asset_name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Category: </label>
+                                                <input type="text" class="form-control" placeholder="Enter Category" name="category">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Description: </label>
+                                                <input type="text" class="form-control" placeholder="Enter Description:" name="description">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Serial Number: </label>
+                                                <input type="text" class="form-control" placeholder="Enter Serial Number:" name="serial_number">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Quantity: </label>
+                                                <input type="text" class="form-control" placeholder="Enter Quantity:" name="quantitiy">
+                                            </div>
+                                        </div>
+                                        <!-- /.card-body -->
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+
+
+
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal-lg1">
+                        <div class="modal-dialog modal-lg1">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Large Modal</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="editAssetForm" method="POST" action="/Rahul/EditAssets">
+                                        <div class="card-body">
+                                            <div class="form-group">
+                                                <label>Asset Name: </label>
+                                                <input type="text" class="form-control" placeholder="Enter Asset Name:" name="asset_name" @* value="@Model.FirstOrDefault()?.asset_name" *@>
+                                                @* <span asp-validation-for="position_name" class="text-danger"></span> *@
+                                            </div>
+                                            <div class="form-group" hidden>
+                                                <label>Asset Name: </label>
+                                                <input type="text" class="form-control" placeholder="Enter Asset Name:" name="id" @* value="@Model.FirstOrDefault()?.id" *@>
+                                                @* <span asp-validation-for="position_name" class="text-danger"></span> *@
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Category: </label>
+                                                <input type="text" class="form-control" placeholder="Enter Category" name="category" @* value="@Model.FirstOrDefault()?.category" *@>
+                                                @* <span asp-validation-for="desciption" class="text-danger"></span> *@
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Description: </label>
+                                                <input type="text" class="form-control" placeholder="ENter Description:" name="description" @* value="@Model.FirstOrDefault()?.description" *@>
+                                                @* <span asp-validation-for="position_name" class="text-danger"></span> *@
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Serial Number: </label>
+                                                <input type="text" class="form-control" placeholder="Enter Serial Number:" name="serial_number" @* value="@Model.FirstOrDefault()?.serial_number" *@>
+                                                @* <span asp-validation-for="position_name" class="text-danger"></span> *@
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Quantity: </label>
+                                                <input type="text" class="form-control" placeholder="Enter Quantity:" name="quantitiy" @* value="@Model.FirstOrDefault()?.quantitiy" *@>
+                                                @* <span asp-validation-for="position_name" class="text-danger"></span> *@
+                                            </div>
+
+
+                                        </div>
+                                        <!-- /.card-body -->
+
+                                        <div class="card-footer">
+                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+
                 </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
 
+        </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
     </div>
 
     <footer class="main-footer">
@@ -213,5 +399,91 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 
+
+
+
+
+
+    <script>
+        $(document).ready(function () {
+            $(".edit-asset").click(function () {
+                var assetId = $(this).data("asset-id");
+
+                // AJAX request to get asset details
+                $.ajax({
+                    url: "/Rahul/EditAssets", // Update the URL to your controller action
+                    type: "GET",
+                    data: { id: assetId },
+                    success: function (data) {
+                        // Populate modal form fields with retrieved data
+                        $("#assetId").val(data.id);
+                        $("input[name='asset_name']").val(data.asset_name);
+                        $("input[name='id']").val(data.id);
+                        $("input[name='category']").val(data.category);
+                        $("input[name='description']").val(data.description);
+                        $("input[name='serial_number']").val(data.serial_number);
+                        $("input[name='quantitiy']").val(data.quantitiy);
+                    }
+                });
+            });
+        });
+
+
+        // $('#editAssetForm').submit(function (e) {
+        //     e.preventDefault(); // Prevent default form submission
+
+        //     // Serialize form data
+        //     var formData = $(this).serialize();
+
+        //     // AJAX request to submit form data
+        //     $.ajax({
+        //         url: $(this).attr('action'), // Get the action URL from the form
+        //         type: 'POST',
+        //         data: formData,
+        //         success: function (response) {
+        //             // Handle success response
+        //             $('#modal-lg1').modal('hide');
+        //             // Optionally, refresh the page or update the table to reflect changes
+        //             location.reload(); // Example: reload the page to see changes
+        //         },
+        //         error: function (xhr, status, error) {
+        //             // Handle error response
+        //             console.log(error);
+        //         }
+        //     });
+        // });
+        // });
+    </script>
+
+
+
+
+    <script>
+
+    $('#editAssetForm').submit(function(e) {
+    e.preventDefault(); // Prevent default form submission
+
+    // Serialize form data
+    var formData = $(this).serialize();
+
+    // AJAX request to submit form data
+    $.ajax({
+    url: $(this).attr('action'),
+    type: 'POST',
+    data: formData,
+    success: function(response) {
+    // Handle success response
+    },
+    error: function(xhr, status, error) {
+    // Handle error response
+    }
+    });
+    });
+
+    </script>
+
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 </body>
 </html>
