@@ -1,4 +1,5 @@
 ﻿using CsvHelper;
+using ExcelDataReader;
 using HRMS.Data;
 using HRMS.Models;
 using HRMS.Models.ViewModels;
@@ -22,26 +23,26 @@ namespace HRMS.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public IActionResult Addposition(Position obj)
-        {
-            if (ModelState.IsValid)
-            {
+        //[HttpPost]
+        //public IActionResult Addposition(Position obj)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
 
-                _context.Positions.Add(obj);
-                _context.SaveChanges();
-                return RedirectToAction("ViewPosition", "Rahul");
-            }
-            return View(obj);
+        //        _context.Positions.Add(obj);
+        //        _context.SaveChanges();
+        //        return RedirectToAction("ViewPosition", "Rahul");
+        //    }
+        //    return View(obj);
 
-        }
+        //}
 
-        [HttpGet]
-        public IActionResult ViewPosition()
-        {
-            var view = _context.Positions.ToList();
-            return View(view);
-        }
+        //[HttpGet]
+        //public IActionResult ViewPosition()
+        //{
+        //    var view = _context.Positions.ToList();
+        //    return View(view);
+        //}
 
 
         [HttpGet]
@@ -68,7 +69,7 @@ namespace HRMS.Controllers
 
         }
 
-       
+
         public async Task<IActionResult> EditAssets(int id)
         {
             var asset = _context.Assets.FirstOrDefault(a => a.id == id);
@@ -89,7 +90,7 @@ namespace HRMS.Controllers
                 var assetToUpdate = _context.Assets.FirstOrDefault(a => a.id == model.id);
                 if (assetToUpdate != null)
                 {
-                    assetToUpdate.asset_name = model.asset_name; 
+                    assetToUpdate.asset_name = model.asset_name;
                     assetToUpdate.category = model.category;
                     assetToUpdate.description = model.description;
                     assetToUpdate.serial_number = model.serial_number;
@@ -97,7 +98,7 @@ namespace HRMS.Controllers
 
 
 
-                    
+
                     _context.Assets.Update(assetToUpdate);
                     _context.SaveChanges();
 
@@ -128,7 +129,7 @@ namespace HRMS.Controllers
             _context.Assets.Remove(assetToDelete);
             _context.SaveChanges();
 
-            return RedirectToAction("ViewAssets","Rahul"); // Redirect to the action that displays assets list (e.g., Index)
+            return RedirectToAction("ViewAssets", "Rahul"); // Redirect to the action that displays assets list (e.g., Index)
         }
 
         [HttpGet]
@@ -138,45 +139,37 @@ namespace HRMS.Controllers
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UploadAttendance(IFormFile file)
-        {
-            if (file == null || file.Length == 0)
-            {
-                ViewBag.Message = "Please select a valid CSV file.";
-                return View("Attendance");
-            }
+       // [HttpPost]
+        //public async Task UploadExcelFile(Stream fileStream)
+        //{
+        //    using (var package = new ExcelPackage(fileStream))
+        //    {
+        //        var worksheet = package.Workbook.Worksheets[0];
 
-            var attendanceData = new List<Dictionary<string, string>>();
+        //        // Read Employee Code and Name from the first row
+        //        var employeeCode = worksheet.Cells[1, 1].Text;
+        //        var employeeName = worksheet.Cells[1, 2].Text;
 
-            using (var stream = new MemoryStream())
-            {
-                await file.CopyToAsync(stream);
-                stream.Position = 0;
+        //        // Read Data starting from the third row
+        //        for (int row = 3; row <= worksheet.Dimension.End.Row; row++)
+        //        {
+        //            var employeeData = new EmployeeData
+        //            {
+        //                EmployeeCode = employeeCode,
+        //                EmployeeName = employeeName,
+        //                Column1 = worksheet.Cells[row, 1].Text,
+        //                Column2 = worksheet.Cells[row, 2].Text,
+        //                // Map additional columns as needed
+        //            };
+        //            _context.EmployeeData.Add(employeeData);
+        //        }
 
-                using (var reader = new StreamReader(stream, Encoding.UTF8))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                {
-                    csv.Read();
-                    csv.ReadHeader();
-                    var headers = csv.HeaderRecord;
-
-                    while (csv.Read())
-                    {
-                        var row = new Dictionary<string, string>();
-                        foreach (var header in headers)
-                        {
-                            row[header] = csv.GetField(header);
-                        }
-                        attendanceData.Add(row);
-                    }
-                }
-            }
-
-            ViewBag.AttendanceData = attendanceData;
-            return View("Attendance");
-        }
-
-
+        //        await _context.SaveChangesAsync();
+        //    }
+        //}
     }
 }
+
+
+
+
