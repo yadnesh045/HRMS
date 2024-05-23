@@ -291,6 +291,18 @@ namespace HRMS.Controllers
 
 
 
+        [HttpPost]
+        public IActionResult ShortList(int id)
+        {
+
+
+            return RedirectToAction("ManageCandidates" , "Home");
+        }
+
+
+
+
+
 
     }
 }

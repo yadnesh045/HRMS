@@ -75,6 +75,7 @@
                                                 <th>Address</th>
                                                 <th>Experince</th>
                                                 <th>Resume</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -92,6 +93,10 @@
 
                                                     <td>
                                                         <a style="margin-left:35px;font-size:25px;" target="_blank" href="@candidate.Resumeurl" class="bi bi-file-earmark-arrow-down-fill">
+                                                    </td>
+                                                    <td>
+                                                        <a class="buttons btn-primary" asp-action="ShortList" asp-controller="Home" asp-route-id="@candidate.id" >ShortList</a>
+                                                        <button class="buttons btn-Danger">Reject</button>
                                                     </td>
                                         </tr>
 

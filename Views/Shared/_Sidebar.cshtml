@@ -139,7 +139,31 @@
                         </a>
                     </li>
                 </ul>
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-edit"></i>
+                    <p>
+                        Job
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a asp-action="LinkedInLogin" asp-controller="LinkedIn" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Post Job</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="AddProject" asp-controller="Home" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>View Posted Jobs</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
+           
         </ul>
     </nav>
     <!-- /.sidebar-menu -->
