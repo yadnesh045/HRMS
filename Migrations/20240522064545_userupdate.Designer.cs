@@ -4,6 +4,7 @@ using HRMS.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRMS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240522064545_userupdate")]
+    partial class userupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,9 +177,11 @@ namespace HRMS.Migrations
                         .HasColumnType("nvarchar(12)");
 
                     b.Property<string>("AccountHolderName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("AccountNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Address")
@@ -196,12 +201,15 @@ namespace HRMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BankName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BranchName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConfirmPassword")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Contact")
@@ -209,6 +217,7 @@ namespace HRMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CurrentCTC")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateOnly>("DateOfBirth")
@@ -230,9 +239,11 @@ namespace HRMS.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("HouseRentAllowance")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IFSCCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsPF")
@@ -260,6 +271,7 @@ namespace HRMS.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhotoURL")
@@ -288,9 +300,11 @@ namespace HRMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SpecialAllowance")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TravelAllowance")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

@@ -15,4 +15,12 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Db_Images\MastersCertificates\" />
+    <Folder Include="wwwroot\Db_Images\BachelorsCertificates\" />
+    <Folder Include="wwwroot\Db_Images\AadharCards\" />
+    <Folder Include="wwwroot\Db_Images\Photos\" />
+    <Folder Include="wwwroot\Db_Images\Resumes\" />
+  </ItemGroup>
+
 </Project>
