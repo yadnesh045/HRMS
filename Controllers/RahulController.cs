@@ -1,9 +1,12 @@
-﻿using HRMS.Data;
+﻿using CsvHelper;
+using HRMS.Data;
 using HRMS.Models;
 using HRMS.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection.Metadata.Ecma335;
+using System.Text;
 
 namespace HRMS.Controllers
 {
@@ -128,6 +131,52 @@ namespace HRMS.Controllers
             return RedirectToAction("ViewAssets","Rahul"); // Redirect to the action that displays assets list (e.g., Index)
         }
 
-    
+        [HttpGet]
+        public IActionResult Attendance()
+        {
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadAttendance(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                ViewBag.Message = "Please select a valid CSV file.";
+                return View("Attendance");
+            }
+
+            var attendanceData = new List<Dictionary<string, string>>();
+
+            using (var stream = new MemoryStream())
+            {
+                await file.CopyToAsync(stream);
+                stream.Position = 0;
+
+                using (var reader = new StreamReader(stream, Encoding.UTF8))
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    csv.Read();
+                    csv.ReadHeader();
+                    var headers = csv.HeaderRecord;
+
+                    while (csv.Read())
+                    {
+                        var row = new Dictionary<string, string>();
+                        foreach (var header in headers)
+                        {
+                            row[header] = csv.GetField(header);
+                        }
+                        attendanceData.Add(row);
+                    }
+                }
+            }
+
+            ViewBag.AttendanceData = attendanceData;
+            return View("Attendance");
+        }
+
+
     }
 }

@@ -1,0 +1,63 @@
+﻿
+
+@* <div class="form-group">
+    <label for="exampleInputEmail1">Upload Resume</label>
+    <input for="formFile" type="file" name="file" id="upload" class="form-control" />
+</div> *@
+
+
+@{
+    ViewBag.Title = "Attendance";
+    var attendanceData = ViewBag.AttendanceData as List<Dictionary<string, string>>;
+}
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <!-- File Upload Form -->
+            <div class="form-group">
+                <label for="exampleInputEmail1">Upload Attendance CSV</label>
+                <form enctype="multipart/form-data" asp-action="UploadAttendance" method="post">
+                    <input type="file" name="file" id="upload" class="form-control" />
+                    <button type="submit" class="btn btn-primary mt-2">Upload</button>
+                </form>
+            </div>
+
+            <!-- Attendance Table -->
+            @if (attendanceData != null && attendanceData.Count > 0)
+            {
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            @foreach (var key in attendanceData[0].Keys)
+                            {
+                                <th>@key</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var row in attendanceData)
+                        {
+                            <tr>
+                                @foreach (var value in row.Values)
+                                {
+                                    <td>@value</td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
