@@ -30,20 +30,19 @@ namespace HRMS.Controllers
             string EnteredPassword = password;
 
 
-            var RoleVerification = _context.Roles.FirstOrDefault(x => x.Email == email);
+            var RoleVerification = _context.UserRoles.FirstOrDefault(x => x.Email == email);
             if (RoleVerification != null)
             {
                 switch (RoleVerification.RoleType)
                 {
                     case "Super Admin":
-                        var admin = _context.Super_Admins.FirstOrDefault(p => p.Email == RoleVerification.Email);
+                        var admin = _context.Users.FirstOrDefault(p => p.Email == RoleVerification.Email);
                         if (admin != null)
                         {
                             if (EnteredPassword == admin.Password)
                             {
 
-
-                                return RedirectToAction("AdminDashboard", "Dashboard");
+                                return RedirectToAction("Index", "Home");
                             }
                             else
                             {
@@ -54,7 +53,7 @@ namespace HRMS.Controllers
 
 
                     case "Supervisor":
-                        var superAdmin = _context.Supervisor.FirstOrDefault(p => p.Email == RoleVerification.Email);
+                        var superAdmin = _context.Users.FirstOrDefault(p => p.Email == RoleVerification.Email);
                         if (superAdmin != null)
                         {
                             // bool doesPasswordMatch = Crypto.VerifyHashedPassword(superAdmin.Password, data.Password);
@@ -74,7 +73,7 @@ namespace HRMS.Controllers
 
 
                     case "Assistant":
-                        var assistant = _context.Assistants.FirstOrDefault(p => p.Email == RoleVerification.Email);
+                        var assistant = _context.Users.FirstOrDefault(p => p.Email == RoleVerification.Email);
                         if (assistant != null)
                         {
                             //bool doesPasswordMatch = Crypto.VerifyHashedPassword(user.Password, data.Password);
@@ -145,14 +144,14 @@ namespace HRMS.Controllers
                 ConfirmPasswords = EnteredConfirmPassword
             };
 
-            var role = new Role
+            var role = new UserRole
             {
-                RoleType = "",
-                Email = EnteredEmail
+                Email = EnteredEmail,
+                RoleType = ""
             };
 
             _context.Users.Add(user);
-            _context.Roles.Add(role);
+            _context.UserRoles.Add(role);
             _context.SaveChanges();
 
 

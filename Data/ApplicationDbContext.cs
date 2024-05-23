@@ -10,7 +10,7 @@ namespace HRMS.Data
 
         }
 
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Supervisor> Supervisor { get; set; }
         public DbSet<Super_Admin> Super_Admins { get; set; }
         public DbSet<User> Users { get; set; }
@@ -22,6 +22,11 @@ namespace HRMS.Data
 
 
 
+
+
+        public DbSet<Roles> Roles { get; set; }
+
+        public DbSet<Rec_Candidate> Candiates { get; set; }
 
     }
 }

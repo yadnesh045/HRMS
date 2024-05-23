@@ -1,3 +1,4 @@
+using HRMS.Data;
 using HRMS.Models;
 using HRMS.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,11 @@ namespace HRMS.Controllers
     {
 
         private readonly IUnitOfWork unitofworks;
-        public HomeController(IUnitOfWork unitofworks)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public HomeController(IUnitOfWork unitofworks, IWebHostEnvironment _webHostEnvironment)
         {
             this.unitofworks = unitofworks;
-
+            this._webHostEnvironment = _webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -24,6 +26,103 @@ namespace HRMS.Controllers
         {
             return View();
         }
+
+
+
+        [HttpGet]
+        public IActionResult CreateRole()
+        {
+            var roles = unitofworks.Roles.GetAll().ToList();
+
+            return View(roles);
+        }
+
+
+        [HttpPost]
+        public IActionResult CreateRole(Roles role)
+        {
+            if (ModelState.IsValid)
+            {
+                var newRole = new Roles
+                {
+                    RoleName = role.RoleName,
+                    Description = role.Description
+                };
+
+                unitofworks.Roles.Add(newRole);
+                unitofworks.Save();
+                return RedirectToAction("CreateRole");
+            }
+            return View();
+        }
+
+
+        [HttpGet]
+        public IActionResult AssignRoles()
+        {
+            var users = unitofworks.Users.GetAll().ToList();
+
+            return View(users);
+       
+        }
+
+        [HttpGet]
+        public IActionResult AssignUserRoles(int id)
+        {
+            var roles = unitofworks.Roles.GetAll().ToList();
+            var user = unitofworks.Users.GetById(id);
+               
+
+            ViewBag.Roles = roles;
+
+            return View(user);
+        }
+
+
+        [HttpPost]
+        public IActionResult AssignUserRoles(UserRole userRole)
+        {
+            if (ModelState.IsValid)
+            {
+
+                var existingUserRole = unitofworks.UserRole.GetByEmail(userRole.Email);
+               
+                if (existingUserRole != null)
+                {
+                    existingUserRole.RoleType = userRole.RoleType;
+                    unitofworks.UserRole.Update(existingUserRole);
+                }
+                else
+                {
+                    unitofworks.UserRole.Add(userRole);
+                }
+
+                unitofworks.Save();
+                return RedirectToAction("AssignRoles");
+            }
+            return View(userRole);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -124,5 +223,63 @@ namespace HRMS.Controllers
             var project = unitofworks.project.GetById(id);
             return View(project);
         }
+
+
+        /*---------------------------------------------Project-----------------------------------------------------*/
+
+
+        /*---------------------------------------------Recrutiment-----------------------------------------------------*/
+
+        [HttpGet]
+        public IActionResult AddCandidate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddCandidate(Rec_Candidate obj, IFormFile file)
+        {
+
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                if (file != null)
+                {
+                    string candidateName = obj.Firstname + "_" + obj.Lastname;
+                    string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    string extension = Path.GetExtension(file.FileName);
+                    string filename = candidateName + "_" + timestamp + extension;
+                    string ResumePath = Path.Combine(wwwRootPath, @"Resume");
+
+                    using (var fileStream = new FileStream(Path.Combine(ResumePath, filename), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    var cand = new Rec_Candidate
+                    {
+                        Firstname = obj.Firstname,
+                        Lastname = obj.Lastname,
+                        Email = obj.Email,
+                        Resumeurl = @"\Resume\" + filename,
+                        Address = obj.Address,
+                        Phone = obj.Phone,
+                        Experince = obj.Experince
+                    };
+
+
+                    unitofworks.Candidate.Add(cand);
+                    unitofworks.Save();
+
+
+                    return RedirectToAction("Index", "Home");
+
+                }
+
+            }
+            return View();
+        }
+
     }
 }
