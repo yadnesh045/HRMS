@@ -281,5 +281,16 @@ namespace HRMS.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult ManageCandidates()
+        {
+
+            var candiates = unitofworks.Candidate.GetAll().ToList();
+            return View(candiates);
+        }
+
+
+
+
     }
 }
