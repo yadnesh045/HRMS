@@ -10,10 +10,11 @@ namespace HRMS.Controllers
     {
 
         private readonly IUnitOfWork unitofworks;
-        public HomeController(IUnitOfWork unitofworks)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public HomeController(IUnitOfWork unitofworks, IWebHostEnvironment _webHostEnvironment)
         {
             this.unitofworks = unitofworks;
-
+            this._webHostEnvironment = _webHostEnvironment;
         }
 
         public IActionResult Index()
@@ -222,5 +223,63 @@ namespace HRMS.Controllers
             var project = unitofworks.project.GetById(id);
             return View(project);
         }
+
+
+        /*---------------------------------------------Project-----------------------------------------------------*/
+
+
+        /*---------------------------------------------Recrutiment-----------------------------------------------------*/
+
+        [HttpGet]
+        public IActionResult AddCandidate()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddCandidate(Rec_Candidate obj, IFormFile file)
+        {
+
+            if (ModelState.IsValid)
+            {
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+                if (file != null)
+                {
+                    string candidateName = obj.Firstname + "_" + obj.Lastname;
+                    string timestamp = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    string extension = Path.GetExtension(file.FileName);
+                    string filename = candidateName + "_" + timestamp + extension;
+                    string ResumePath = Path.Combine(wwwRootPath, @"Resume");
+
+                    using (var fileStream = new FileStream(Path.Combine(ResumePath, filename), FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    var cand = new Rec_Candidate
+                    {
+                        Firstname = obj.Firstname,
+                        Lastname = obj.Lastname,
+                        Email = obj.Email,
+                        Resumeurl = @"\Resume\" + filename,
+                        Address = obj.Address,
+                        Phone = obj.Phone,
+                        Experince = obj.Experince
+                    };
+
+
+                    unitofworks.Candidate.Add(cand);
+                    unitofworks.Save();
+
+
+                    return RedirectToAction("Index", "Home");
+
+                }
+
+            }
+            return View();
+        }
+
     }
 }

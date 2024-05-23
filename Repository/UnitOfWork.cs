@@ -11,12 +11,15 @@ namespace HRMS.Repository
         public IRolesRepository Roles { get; set; }
         public IUsersRepository Users { get; set; }
         public IUserRoleRepository UserRole { get; set; }
+        public IRec_CandidateRepository Candidate { get; set; }
+
         public UnitOfWork(ApplicationDbContext _db)
         {
             project = new ProjectRepository(_db);
             Users = new UserRepository(_db);
             Roles = new RolesRepository(_db);
             UserRole = new UserRoleRepository(_db);
+            Candidate = new Rec_CandidateRepository(_db);
             this._db = _db;
 
         }

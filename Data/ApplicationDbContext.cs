@@ -20,5 +20,7 @@ namespace HRMS.Data
 
         public DbSet<Roles> Roles { get; set; }
 
+        public DbSet<Rec_Candidate> Candiates { get; set; }
+
     }
 }
