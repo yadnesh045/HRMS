@@ -72,6 +72,10 @@
                                                 <th>Contact</th>
                                                 <th>Date Of Birth</th>
                                                 <th>Role</th>
+
+                                                <th>Actions</th>
+
+
                                                 <th>Current CTC</th>
                                                 <th>Aadhar Card Number</th>
                                                 <th>PanCard</th>
@@ -106,7 +110,6 @@
                                                 <th>AccountHolderName</th>
                                                 <th>IFSCCode</th>
                                                 <th>Password</th>
-                                                <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -120,6 +123,11 @@
                                                     <td>@user.Contact</td>
                                                     <td>@user.DateOfBirth</td>
                                                     <td>@user.Role</td>
+                                                    <td>
+                                                        <a href="@Url.Action("EditUser", "Home", new { id = user.EmployeeId })" class="btn btn-primary"><i class="bi bi-pencil"></i></a>
+                                                        <a onclick="deleteUser(@user.EmployeeId)" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                                                    </td>
+
                                                     <td>@user.CurrentCTC</td>
                                                     <td>@user.AadharNumber</td>
                                                     <td>@user.PancardNumber</td>
@@ -176,10 +184,7 @@
                                                     <td>@user.AccountHolderName</td>
                                                     <td>@user.IFSCCode</td>
                                                     <td>@user.Password</td>
-                                                    <td>
-                                                        <a href="@Url.Action("EditUser", "Home", new { id = user.EmployeeId })" class="btn btn-primary">Edit</a>
-                                                        <a onclick="deleteUser(@user.EmployeeId)" class="btn btn-danger">Delete</a>
-                                                    </td>
+                                                   
 
 
                                                 </tr>
