@@ -4,6 +4,7 @@ using HRMS.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
 using System.Diagnostics;
 
 namespace HRMS.Controllers
@@ -264,8 +265,10 @@ namespace HRMS.Controllers
 
                     MastersEducation = user.MastersEducation,
                     MastersUniversity = user.MastersUniversity,
+                    MastersPercentage = user.MastersPercentage, 
                     BachelorsEducation = user.BachelorsEducation,
                     BachelorsUniversity = user.BachelorsUniversity,
+                    BachelorsPercentage = user.BachelorsPercentage,
 
                     Role = user.Role,
                     JobDescription = user.JobDescription,
@@ -281,7 +284,7 @@ namespace HRMS.Controllers
                     BranchName = user.BranchName,
 
                     Password = GeneratePassword(),
-                    ConfirmPassword= user.Password
+                    ConfirmPassword = user.Password
                 };
 
 
@@ -375,12 +378,25 @@ namespace HRMS.Controllers
             return View();
         }
 
-        private int GenerateEmployeeID()
+        public int GenerateEmployeeID()
         {
-            Random random = new Random();
-            int id = random.Next(1000000000, 2000000000);
-            return id;
+            // Generate a new GUID
+            Guid guid = Guid.NewGuid();
+
+            // Get the numeric representation of the first part of the GUID
+            string guidString = guid.ToString("N").Substring(0, 8); // First 8 hexadecimal characters
+
+            // Convert the GUID string to an integer
+            int uniqueID = int.Parse(guidString, System.Globalization.NumberStyles.HexNumber);
+
+            // Ensure the ID is positive and 10 digits by taking the absolute value and then the modulus of 10^9
+            uniqueID = Math.Abs(uniqueID) % 1000000000;
+
+            // If the uniqueID is less than 10 digits, pad with leading zeros when converting to string
+            return uniqueID;
         }
+
+
 
         private string GeneratePassword()
         {
@@ -416,6 +432,96 @@ namespace HRMS.Controllers
             int passwordLength = random.Next(6, 11);
             return new string(password).Substring(0, passwordLength);
         }
+
+
+
+
+        [HttpGet]
+        public IActionResult ViewUsers()
+        {
+            var users = unitofworks.Users.GetAll().ToList();
+            return View(users);
+        }
+
+        [HttpPost]
+
+        public JsonResult DeleteUser(int id)
+        {
+            var user = unitofworks.Users.GetByEmployeeID(id);
+            if (user == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            else
+            {
+                if (user.MastersCertificateURL != null)
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "MastersCertificates", user.MastersCertificateURL.Split("/").Last());
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                }
+                if (user.BachelorsCertificateURL != null)
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "BachelorsCertificates", user.BachelorsCertificateURL.Split("/").Last());
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                }
+                if (user.ResumeURL != null)
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "Resumes", user.ResumeURL.Split("/").Last());
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                }
+                if (user.AadharCardURL != null)
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "AadharCards", user.AadharCardURL.Split("/").Last());
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                }
+                if (user.PhotoURL != null)
+                {
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "Photos", user.PhotoURL.Split("/").Last());
+                    if (System.IO.File.Exists(path))
+                    {
+                        System.IO.File.Delete(path);
+                    }
+                }
+
+                unitofworks.Users.Remove(user);
+                unitofworks.Save();
+                return Json(new { success = true, message = "Delete successful" });
+
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -515,6 +621,7 @@ namespace HRMS.Controllers
 
             TempData["Error"] = "Error Occured";
             return RedirectToAction("ManageCandidates" , "Home");
+            return RedirectToAction("ManageCandidates", "Home");
         }
 
 

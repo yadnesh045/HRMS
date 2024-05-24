@@ -13,6 +13,11 @@ namespace HRMS.Repository
             this.db = db;
         }
 
+        public User GetByEmployeeID(int id)
+        {
+            return db.Users.FirstOrDefault(u => u.EmployeeId == id);
+        }
+
         public User GetById(int Id)
         {
             return db.Users.Find(Id);
