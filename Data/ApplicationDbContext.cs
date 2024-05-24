@@ -29,6 +29,7 @@ namespace HRMS.Data
         public DbSet<Rec_Candidate> Candiates { get; set; }
 
         public DbSet<ShorList> ShortListed_Candiates { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
 
         public DbSet<Interview> Intervies { get; set; }
 

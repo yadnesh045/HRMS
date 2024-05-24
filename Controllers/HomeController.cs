@@ -690,6 +690,82 @@ namespace HRMS.Controllers
         }
 
 
+        //---------------------------------------------Attendance -------------------------------------------
+
+        [HttpGet]
+        public IActionResult AddAttendance()
+        {
+             var users = unitofworks.Users.GetAll().ToList();
+            ViewBag.Users = users;
+
+
+
+
+            return View();
+        }
+
+        [HttpGet]
+        public JsonResult GetEmployeeData(int id)
+        {
+            var user = unitofworks.Users.Get(u => u.EmployeeId == id);
+            if (user == null)
+            {
+                return Json(null);
+            }
+            return Json(new { user.EmployeeId, user.FullName });
+        }
+
+        [HttpGet]
+        public JsonResult GetEmployeeDataByName(string name)
+        {
+            var user = unitofworks.Users.Get(u => u.FullName == name);
+            if (user == null)
+            {
+                return Json(null);
+            }
+            return Json(new { user.EmployeeId, user.FullName });
+        }
+
+
+
+
+        [HttpPost]
+        public IActionResult AddAttendance (Attendance attendance)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = unitofworks.Users.Get(u => u.EmployeeId == attendance.EmployeeId);
+                if (user == null)
+                {
+                    ModelState.AddModelError("EmployeeId", "Invalid Employee ID");
+                    return View();
+                }
+
+                var att = new Attendance
+                {
+                    EmployeeId = attendance.EmployeeId,
+                    FullName = user.FullName,
+                    Date = attendance.Date,
+                    Shift = attendance.Shift,
+                    ScheduleInTime = attendance.ScheduleInTime,
+                    ScheduleOutTime = attendance.ScheduleOutTime,
+                    ActualInTime = attendance.ActualInTime,
+                    ActualOutTime = attendance.ActualOutTime,
+                    TotalWorkingTime = attendance.TotalWorkingTime,
+                    LateBy = attendance.LateBy,
+                    Status = attendance.Status
+                };
+
+                unitofworks.Attendance.Add(att);
+                unitofworks.Save();
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
+
+
 
     }
 }
