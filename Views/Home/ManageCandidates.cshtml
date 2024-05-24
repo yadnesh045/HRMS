@@ -82,9 +82,9 @@
 
                                             @foreach (var candidate in Model)
                                             {
-                                                
-                                        <tr>
-                                            <td>@candidate.Firstname</td>
+
+                                                <tr>
+                                                    <td>@candidate.Firstname</td>
                                                     <td>@candidate.Lastname</td>
                                                     <td>@candidate.Email</td>
                                                     <td>@candidate.Phone</td>
@@ -95,10 +95,10 @@
                                                         <a style="margin-left:35px;font-size:25px;" target="_blank" href="@candidate.Resumeurl" class="bi bi-file-earmark-arrow-down-fill">
                                                     </td>
                                                     <td>
-                                                        <a class="buttons btn-primary" asp-action="ShortList" asp-controller="Home" asp-route-id="@candidate.id" >ShortList</a>
+                                                        <a class="buttons btn-primary" asp-action="ShortList" asp-controller="Home" asp-route-id="@candidate.id">ShortList</a>
                                                         <button class="buttons btn-Danger">Reject</button>
                                                     </td>
-                                        </tr>
+                                                </tr>
 
                                             }
 

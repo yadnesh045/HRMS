@@ -62,8 +62,11 @@ namespace HRMS.Models
 
         public string? MastersUniversity { get; set; }
 
-        [Range(0, 100)]
+       
+        [Range(0.00, 10.00, ErrorMessage = "CGPA must be between 0.00 and 10.00.")]
         public decimal MastersPercentage { get; set; }
+
+
 
         [NotMapped]
         [Display(Name = "Masters Certificate")]
@@ -77,8 +80,13 @@ namespace HRMS.Models
  
         public string? BachelorsUniversity { get; set; }
 
-        [Range(0, 100)]
+       
+
+
+        [Range(0.00, 10.00, ErrorMessage = "CGPA must be between 0.00 and 10.00.")]
         public decimal BachelorsPercentage { get; set; }
+
+
 
         [NotMapped]
         [Display(Name = "Bachelors Certificate")]
