@@ -13,6 +13,8 @@ namespace HRMS.Models
 
         public string CandidateName { get; set; }
 
+        public string Type { get; set; }
+
         public string CandidateEmail { get; set; }
     }
 }

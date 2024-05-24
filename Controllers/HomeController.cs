@@ -1,6 +1,7 @@
 using HRMS.Data;
 using HRMS.Models;
 using HRMS.Repository.IRepository;
+using HRMS.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -14,10 +15,12 @@ namespace HRMS.Controllers
 
         private readonly IUnitOfWork unitofworks;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public HomeController(IUnitOfWork unitofworks, IWebHostEnvironment _webHostEnvironment)
+        private readonly IServices services;
+        public HomeController(IUnitOfWork unitofworks, IWebHostEnvironment _webHostEnvironment, IServices services)
         {
             this.unitofworks = unitofworks;
             this._webHostEnvironment = _webHostEnvironment;
+            this.services = services;
         }
 
         public IActionResult Index()
@@ -232,7 +235,7 @@ namespace HRMS.Controllers
 
         [HttpGet]
         public IActionResult AddUser()
-        {
+         {
             var roles = unitofworks.Roles.GetAll().ToList();
             ViewBag.Roles = roles;
 
@@ -621,7 +624,6 @@ namespace HRMS.Controllers
 
             TempData["Error"] = "Error Occured";
             return RedirectToAction("ManageCandidates" , "Home");
-            return RedirectToAction("ManageCandidates", "Home");
         }
 
 
@@ -663,6 +665,17 @@ namespace HRMS.Controllers
 
                 unitofworks.Interview.Add(obj);
                 unitofworks.Save();
+
+
+
+                services.SendInterviewEmail(obj.CandidateEmail, obj);
+
+
+
+
+
+
+
                 return Json(new { redirectUrl = Url.Action("ViewInterviews", "Home") });
             }
             return Json(new { error = "Model validation failed" });
