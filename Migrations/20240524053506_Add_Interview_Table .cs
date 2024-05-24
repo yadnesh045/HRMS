@@ -11,13 +11,7 @@ namespace HRMS.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "HealthInsurance",
-                table: "Users");
 
-            migrationBuilder.DropColumn(
-                name: "IsPF",
-                table: "Users");
 
             migrationBuilder.CreateTable(
                 name: "Intervies",
@@ -42,19 +36,7 @@ namespace HRMS.Migrations
             migrationBuilder.DropTable(
                 name: "Intervies");
 
-            migrationBuilder.AddColumn<bool>(
-                name: "HealthInsurance",
-                table: "Users",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
 
-            migrationBuilder.AddColumn<bool>(
-                name: "IsPF",
-                table: "Users",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
         }
     }
 }

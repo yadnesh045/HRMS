@@ -20,7 +20,7 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddHttpClient<LinkedInService>();
-
+builder.Services.AddScoped<IServices, Services>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

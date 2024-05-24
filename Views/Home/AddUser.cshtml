@@ -1,6 +1,4 @@
-﻿
-
-@{
+﻿@{
     Layout = null;
 }
 <!DOCTYPE html>
@@ -702,7 +700,7 @@
 
         function submitForm() {
             const formData = new FormData(document.getElementById('employeeForm'));
-
+            
             fetch('/Home/adduser', {
                 method: 'POST',
                 body: formData
