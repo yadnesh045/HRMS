@@ -40,6 +40,9 @@
             </li>   
 
 
+
+
+
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-edit"></i>
@@ -63,6 +66,37 @@
                     </li>
                 </ul>
             </li>
+
+
+
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-edit"></i>
+                    <p>
+                        Attendance
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a asp-action="AddAttendance" asp-controller="Home" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Add Todays Attendance</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-action="AddProject" asp-controller="Home" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Check Attendance Of Employee</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+
+
+
 
             <li class="nav-item">
                 <a asp-action="ViewAssets" asp-controller="Rahul" class="nav-link">

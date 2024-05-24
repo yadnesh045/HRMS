@@ -12,6 +12,8 @@
         IRec_CandidateRepository Candidate { get; set; }
 
         IRec_ShortListeCandidateRepository ShortListed { get; set; }
+
+        IAttendanceRepository Attendance { get; set; }
         void Save();
     }
 }
