@@ -1,4 +1,8 @@
 ﻿
+
+@{
+    Layout = null;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -132,12 +136,15 @@
 
                                             <div class="line"></div>
 
-                                            <div class="step" data-target="#work-experience-part">
-                                                <button type="button" class="step-trigger" role="tab" aria-controls="work-experience-part" id="work-experience-part-trigger">
+
+                                            <div class="step" data-target="#current-work-info-part">
+                                                <button type="button" class="step-trigger" role="tab" aria-controls="current-work-info-part" id="current-work-info-part-trigger">
                                                     <span class="bs-stepper-circle">3</span>
-                                                    <span class="bs-stepper-label">Work Experience</span>
+                                                    <span class="bs-stepper-label">Current Work Info</span>
                                                 </button>
                                             </div>
+
+                                           
                                             <div class="line"></div>
 
                                             <div class="step" data-target="#documents-part">
@@ -149,10 +156,10 @@
 
                                             <div class="line"></div>
 
-                                            <div class="step" data-target="#current-work-info-part">
-                                                <button type="button" class="step-trigger" role="tab" aria-controls="current-work-info-part" id="current-work-info-part-trigger">
+                                            <div class="step" data-target="#work-experience-part">
+                                                <button type="button" class="step-trigger" role="tab" aria-controls="work-experience-part" id="work-experience-part-trigger">
                                                     <span class="bs-stepper-circle">5</span>
-                                                    <span class="bs-stepper-label">Current Work Info</span>
+                                                    <span class="bs-stepper-label">Work Experience</span>
                                                 </button>
                                             </div>
 
@@ -290,34 +297,56 @@
                                                 <button class="btn btn-primary" type="button" onclick="nextStep()">Next</button>
                                             </div>
 
-                                            <!-- Work Experience -->
-                                            <div id="work-experience-part" class="content" role="tabpanel" aria-labelledby="work-experience-part-trigger">
+                                            <!-- Current Work Info -->
+                                            <div id="current-work-info-part" class="content" role="tabpanel" aria-labelledby="current-work-info-part-trigger">
+
                                                 <div class="form-group">
-                                                    <label>Previous Organization</label>
-                                                    <input type="text" class="form-control" id="previousOrganization" placeholder="Enter Previous Organization" name="PreviousCompanyName">
+                                                    <label for="role">Role</label>
+                                                    <select class="form-control" id="role" name="Role">
+                                                        @foreach (var role in ViewBag.Roles)
+                                                        {
+                                                            <option value="@role.RoleName">@role.RoleName</option>
+                                                        }
+                                                    </select>
                                                 </div>
+
+
+
                                                 <div class="form-group">
-                                                    <label>Designation</label>
-                                                    <input type="text" class="form-control" id="designation" placeholder="Enter Designation" name="PreviousCompanyJobTitle">
+                                                    <label>Job Description</label>
+                                                    <input type="text" class="form-control" id="jobDescription" placeholder="Enter Job Description" name="JobDescription">
                                                 </div>
+
+
+
                                                 <div class="form-group">
-                                                    <label>Date of Joining</label>
-                                                    <input type="date" class="form-control" id="joiningDate" name="PreviousCompanyJoiningDate">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Date of Relieving</label>
-                                                    <input type="date" class="form-control" id="relievingDate" name="PreviousCompanyLeavingDate">
+                                                    <label>Current CTC</label>
+                                                    <input type="text" class="form-control" id="currentCTC" placeholder="Enter Current CTC " name="CurrentCTC">
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Previous Company CTC</label>
-                                                    <input type="text" class="form-control" id="previouscompanyctc" name="PreviousCompanyCTC">
+                                                    <label>Current House Rent Allowance </label>
+                                                    <input type="text" class="form-control" id="currentHRA" placeholder="Enter Current House Rent Allowance" name="HouseRentAllowance">
                                                 </div>
+
+
+                                                <div class="form-group">
+                                                    <label>Current Travel Allowance </label>
+                                                    <input type="text" class="form-control" id="currentTA" placeholder="Enter Current  Travel Allowance" name="TravelAllowance">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Current Special Allowance </label>
+                                                    <input type="text" class="form-control" id="currentSA" placeholder="Enter Current Special Allowance" name="SpecialAllowance">
+                                                </div>
+
 
 
                                                 <button class="btn btn-primary" type="button" onclick="previousStep()">Previous</button>
                                                 <button class="btn btn-primary" type="button" onclick="nextStep()">Next</button>
                                             </div>
+
+
 
                                             <!-- Documents -->
                                             <div id="documents-part" class="content" role="tabpanel" aria-labelledby="documents-part-trigger">
@@ -383,54 +412,40 @@
                                             </div>
 
 
-                                            <!-- Current Work Info -->
-                                            <div id="current-work-info-part" class="content" role="tabpanel" aria-labelledby="current-work-info-part-trigger">
 
+                                            <!-- Work Experience -->
+                                            <div id="work-experience-part" class="content" role="tabpanel" aria-labelledby="work-experience-part-trigger">
                                                 <div class="form-group">
-                                                    <label for="role">Role</label>
-                                                    <select class="form-control" id="role" name="Role">
-                                                        @foreach (var role in ViewBag.Roles)
-                                                        {
-                                                            <option value="@role.RoleName">@role.RoleName</option>
-                                                        }
-                                                    </select>
+                                                    <label>Previous Organization</label>
+                                                    <input type="text" class="form-control" id="previousOrganization" placeholder="Enter Previous Organization" name="PreviousCompanyName">
                                                 </div>
-
-
-
                                                 <div class="form-group">
-                                                    <label>Job Description</label>
-                                                    <input type="text" class="form-control" id="jobDescription" placeholder="Enter Job Description" name="JobDescription">
+                                                    <label>Designation</label>
+                                                    <input type="text" class="form-control" id="designation" placeholder="Enter Designation" name="PreviousCompanyJobTitle">
                                                 </div>
-
-
-
                                                 <div class="form-group">
-                                                    <label>Current CTC</label>
-                                                    <input type="text" class="form-control" id="currentCTC" placeholder="Enter Current CTC " name="CurrentCTC">
+                                                    <label>Date of Joining</label>
+                                                    <input type="date" class="form-control" id="joiningDate" name="PreviousCompanyJoiningDate">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Date of Relieving</label>
+                                                    <input type="date" class="form-control" id="relievingDate" name="PreviousCompanyLeavingDate">
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <label>Current House Rent Allowance </label>
-                                                    <input type="text" class="form-control" id="currentHRA" placeholder="Enter Current House Rent Allowance" name="HouseRentAllowance">
+                                                    <label>Previous Company CTC</label>
+                                                    <input type="text" class="form-control" id="previouscompanyctc" name="PreviousCompanyCTC">
                                                 </div>
-
-
-                                                <div class="form-group">
-                                                    <label>Current Travel Allowance </label>
-                                                    <input type="text" class="form-control" id="currentTA" placeholder="Enter Current  Travel Allowance" name="TravelAllowance">
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label>Current Special Allowance </label>
-                                                    <input type="text" class="form-control" id="currentSA" placeholder="Enter Current Special Allowance" name="SpecialAllowance">
-                                                </div>
-
 
 
                                                 <button class="btn btn-primary" type="button" onclick="previousStep()">Previous</button>
                                                 <button class="btn btn-primary" type="button" onclick="nextStep()">Next</button>
                                             </div>
+
+
+
+
+                                           
 
                                             <!-- Bank Details -->
                                             <div id="bank-details-part" class="content" role="tabpanel" aria-labelledby="bank-details-part-trigger">
@@ -700,8 +715,9 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        console.log('Form submitted successfully!');
-                        alert('Form submitted successfully!');
+                       // console.log('Form submitted successfully!');
+                        //alert('Form submitted successfully!');
+                        window.location.href = '/Home/Index';
                     } else {
                         console.log('Failed to submit the form:', data.error);
                         alert('Failed to submit the form: ' + data.error);
@@ -718,9 +734,9 @@
             $('#role').change(function () {
                 var selectedRole = $(this).val();
                 if (selectedRole == 'Intern') {
-                    $('#currentCTC, #currentHRA, #currentSA, #currentTA, #isPFHolder, #isHealthInsuranceHolder,#accountholdername , #bankName, #bankBranch, #accountNumber ,#ifscCode').prop('disabled', true);
+                    $('#currentCTC, #currentHRA, #currentSA, #currentTA, #isPFHolder, #isHealthInsuranceHolder,#accountholdername , #bankName, #bankBranch, #accountNumber ,#ifscCode, #previousOrganization, #designation,#joiningDate,#relievingDate,#previouscompanyctc').prop('disabled', true);
                 } else {
-                    $('#currentCTC, #currentHRA, #currentSA, #currentTA, #isPFHolder, #isHealthInsuranceHolder,#accountholdername , #bankName, #bankBranch, #accountNumber ,#ifscCode').prop('disabled', false);
+                    $('#currentCTC, #currentHRA, #currentSA, #currentTA, #isPFHolder, #isHealthInsuranceHolder,#accountholdername , #bankName, #bankBranch, #accountNumber ,#ifscCode, #previousOrganization, #designation,#joiningDate,#relievingDate,#previouscompanyctc').prop('disabled', false);
                 }
             });
         });
