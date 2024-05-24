@@ -2,6 +2,7 @@ using HRMS.Data;
 using HRMS.Models;
 using HRMS.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Diagnostics;
 
@@ -526,7 +527,47 @@ namespace HRMS.Controllers
             return View(Short);
         }
 
+        [HttpGet]
+        public IActionResult GetCandidateDetails(int id)
+        {
+            var candidate = unitofworks.ShortListed.GetById(id); // Adjust according to your data context and model
+            if (candidate == null)
+            {
+                return NotFound();
+            }
 
+            // Create an anonymous object to send only the necessary details
+            var candidateDetails = new
+            {
+                id = candidate.id,
+                name = candidate.Firstname + " " + candidate.Lastname,
+                email = candidate.Email
+            };
+
+            return Json(candidateDetails);
+        }
+
+
+        [HttpPost]
+        public ActionResult AddInterview(Interview obj)
+        {
+            if (ModelState.IsValid)
+            {
+
+                unitofworks.Interview.Add(obj);
+                unitofworks.Save();
+                return Json(new { redirectUrl = Url.Action("ViewInterviews", "Home") });
+            }
+            return Json(new { error = "Model validation failed" });
+        }
+
+        [HttpGet]
+
+        public IActionResult ViewInterviews()
+        {
+            var Short = unitofworks.Interview.GetAll().ToList();
+            return View(Short);
+        }
 
 
 

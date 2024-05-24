@@ -2,7 +2,7 @@
     Layout = null;
 }
 
-@model List<HRMS.Models.Rec_Candidate>
+@model List<HRMS.Models.Interview>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +48,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h1>Candidates</h1>
+                            <h1>Interviews</h1>
                         </div>
                     </div>
                 </div><!-- /.container-fluid -->
@@ -61,73 +61,37 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">All Candidates</h3>
+                                    <h3 class="card-title">Scheduled Interviews</h3>
                                 </div>
-
-
-                                
                                 <!-- /.card-header -->
                                 <div class="card-body">
-                                    @if (Model != null && Model.Any())
-                        {
                                     <table id="example1" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
-                                                <th>First Name</th>
-                                                <th>Last name</th>
-                                                <th>Email</th>
-                                                <th>Phone</th>
-                                                <th>Address</th>
-                                                <th>Experince</th>
-                                                <th>Resume</th>
-                                                <th>Action</th>
+                                                <th>Location</th>
+                                                <th>Date</th>
+                                                <th>Time</th>
+                                                <th>CandidateName</th>
+                                                <th>CandidateEmail</th>
                                             </tr>
                                         </thead>
                                         <tbody>
 
                                             @foreach (var candidate in Model)
                                             {
-                                                
-                                        <tr>
-                                            <td>@candidate.Firstname</td>
-                                                    <td>@candidate.Lastname</td>
-                                                    <td>@candidate.Email</td>
-                                                    <td>@candidate.Phone</td>
-                                                    <td>@candidate.Address</td>
-                                                    <td>@candidate.Experince</td>
 
-                                                    <td>
-                                                        <a style="margin-left:35px;font-size:25px;" target="_blank" href="@candidate.Resumeurl" class="bi bi-file-earmark-arrow-down-fill">
-                                                    </td>
-                                                    <td>
-                                                        <button class="btn btn-primary shortlist-button" data-id="@candidate.id">ShortList</button>
-
-                                                        <button class="buttons btn-Danger">Reject</button>
-                                                    </td>
-                                        </tr>
+                                                <tr>
+                                                    <td>@candidate.place</td>
+                                                    <td>@candidate.Date.ToShortDateString()</td>
+                                                    <td>@candidate.Date.ToShortTimeString()</td>
+                                                    <td>@candidate.CandidateName</td>
+                                                    <td>@candidate.CandidateEmail</td>
+                                                </tr>
 
                                             }
 
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>First Name</th>
-                                                <th>Last name</th>
-                                                <th>Email</th>
-                                                <th>Phone</th>
-                                                <th>Address</th>
-                                                <th>Experince</th>
-                                                <th>Resume</th>
-                                            </tr>
-                                        </tfoot>
                                     </table>
-                                    }
-                                    else
-                                    {
-                                        <div class="alert alert-info" role="alert">
-                                            No Candidates available.
-                                        </div>
-                                    }
                                 </div>
                                 <!-- /.card-body -->
                             </div>
@@ -196,28 +160,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
-        $(document).ready(function () {
-            $('.shortlist-button').click(function (e) {
-                e.preventDefault();
-                var candidateId = $(this).data('id');
 
-                $.ajax({
-                    url: '@Url.Action("ShortList", "Home")',
-                    type: 'POST',
-                    data: { id: candidateId },
-                    success: function (response) {
-                        // Handle the successful response here
-                        window.location.href = '@Url.Action("ManageCandidates", "Home")';
-                    },
-                    error: function (xhr, status, error) {
-                        // Handle the error response here
-                        console.error("An error occurred: " + error);
-                    }
-                });
-            });
-        });
-    </script>
 
 
     @if (TempData["Success"] != null)

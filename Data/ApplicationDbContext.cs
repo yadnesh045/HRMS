@@ -30,6 +30,8 @@ namespace HRMS.Data
 
         public DbSet<ShorList> ShortListed_Candiates { get; set; }
 
+        public DbSet<Interview> Intervies { get; set; }
+
 
     }
 }

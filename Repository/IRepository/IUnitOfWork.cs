@@ -8,6 +8,7 @@
         IUsersRepository Users { get; set; }
         IUserRoleRepository UserRole { get; set; }
 
+        IInterviewRepository Interview { get; set; }
         IRec_CandidateRepository Candidate { get; set; }
 
         IRec_ShortListeCandidateRepository ShortListed { get; set; }

@@ -13,6 +13,7 @@ namespace HRMS.Repository
         public IUserRoleRepository UserRole { get; set; }
         public IRec_CandidateRepository Candidate { get; set; }
         public IRec_ShortListeCandidateRepository ShortListed { get; set; }
+        public IInterviewRepository Interview { get; set; }
 
         public UnitOfWork(ApplicationDbContext _db)
         {
@@ -22,6 +23,7 @@ namespace HRMS.Repository
             UserRole = new UserRoleRepository(_db);
             Candidate = new Rec_CandidateRepository(_db);
             ShortListed = new Rec_ShortListeCandidateRepository(_db);
+            Interview = new InterviewRepository(_db);
             this._db = _db;
 
         }

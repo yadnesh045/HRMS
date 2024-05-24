@@ -1,6 +1,7 @@
 ﻿using HRMS.Data;
 using HRMS.Models;
 using HRMS.Models.ViewModels;
+using HRMS.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -8,7 +9,11 @@ namespace HRMS.Controllers
 {
     public class LoginController : Controller
     {
+
+
         private readonly ApplicationDbContext _context;
+
+
         public LoginController(ApplicationDbContext context)
         {
             _context = context;
@@ -42,6 +47,7 @@ namespace HRMS.Controllers
                             if (EnteredPassword == admin.Password)
                             {
 
+                                HttpContext.Session.SetInt32("SuperId", admin.Id);
                                 return RedirectToAction("Index", "Home");
                             }
                             else
@@ -165,7 +171,14 @@ namespace HRMS.Controllers
             return RedirectToAction("Login");
         }
 
+        [HttpGet]
+        public IActionResult LockScreen()
+        {
 
+            int AdminId = HttpContext.Session.GetInt32("SuperId") ?? 0;
+            var Admin = _context.Users.Find(AdminId);
+            return View(Admin);
+        }
 
     }
 }
