@@ -1,0 +1,63 @@
+﻿@model List<HRMS.Models.EmployeeData>
+
+@{
+    ViewData["Title"] = "Display Data";
+}
+
+<h2>Employee Data</h2>
+
+<form asp-controller="Home" asp-action="DisplayData" method="get">
+    <div class="form-group">
+        <label for="employeeName">Employee Name:</label>
+        <input type="text" name="employeeName" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Employee Code</th>
+            <th>Employee Name</th>
+            <th>AttendanceDate</th>
+            <th>Shift</th>
+            <th>ScheduledInTime</th>
+            <th>ScheduledOutTime</th>
+            <th>ActualInTime</th>
+            <th>ActualOutTime</th>
+            <th>WorkDuration</th>
+            <th>Overtime</th>
+            <th>TotalDuration</th>
+            <th>LateBy</th>
+            <th>EarlyGoingBy</th>
+            <th>Status</th>
+            <th>PunchRecords</th>
+           
+            <!-- Add additional columns as needed -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EmployeeCode</td>
+                <td>@item.EmployeeName</td>
+                <td>@item.AttendanceDate</td>
+                <td>@item.Shift</td>
+                <td>@item.ScheduledInTime</td>
+                <td>@item.ScheduledOutTime</td>
+                <td>@item.ActualInTime</td>
+                <td>@item.ActualOutTime</td>
+                <td>@item.WorkDuration</td>
+                <td>@item.Overtime</td>
+                <td>@item.TotalDuration</td>
+                <td>@item.LateBy</td>
+                <td>@item.EarlyGoingBy</td>
+                <td>@item.Status</td>
+                <td>@item.PunchRecords</td>
+
+                <!-- Add additional columns as needed -->
+            </tr>
+        }
+    </tbody>
+</table>
