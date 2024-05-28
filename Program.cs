@@ -3,6 +3,7 @@ using HRMS.Repository;
 using Microsoft.EntityFrameworkCore;
 using HRMS.Repository.IRepository;
 using HRMS.Service;
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,9 @@ builder.Services.AddSession(options =>
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddHttpClient<LinkedInService>();
 builder.Services.AddScoped<IServices, Services>();
+builder.Services.AddScoped<ExcelService>();
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
