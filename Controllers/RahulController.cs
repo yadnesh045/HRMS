@@ -3,6 +3,7 @@ using ExcelDataReader;
 using HRMS.Data;
 using HRMS.Models;
 using HRMS.Models.ViewModels;
+using HRMS.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Globalization;
@@ -15,9 +16,11 @@ namespace HRMS.Controllers
     public class RahulController : Controller
     {
         readonly ApplicationDbContext _context;
-        public RahulController(ApplicationDbContext db)
+        private readonly ExcelService _excelService;
+        public RahulController(ApplicationDbContext db, ExcelService excelService)
         {
             _context = db;
+            _excelService = excelService;
         }
         public IActionResult Addposition()
         {
@@ -139,7 +142,7 @@ namespace HRMS.Controllers
             return View();
         }
 
-       // [HttpPost]
+        // [HttpPost]
         //public async Task UploadExcelFile(Stream fileStream)
         //{
         //    using (var package = new ExcelPackage(fileStream))
@@ -167,6 +170,44 @@ namespace HRMS.Controllers
         //        await _context.SaveChangesAsync();
         //    }
         //}
+
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Upload(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                ModelState.AddModelError("File", "Please upload a file.");
+                return View("Index");
+            }
+
+            using (var stream = file.OpenReadStream())
+            {
+                await _excelService.UploadExcelFile(stream);
+            }
+
+            ViewBag.Message = "File uploaded and data stored successfully.";
+            return RedirectToAction("DisplayData", "Rahul");
+        }
+
+
+        [HttpGet]
+        public IActionResult DisplayData(string employeeName)
+        {
+            var data = _context.EmployeeDatas
+                               .Where(e => e.EmployeeName == employeeName)
+                               .ToList();
+
+            return View(data);
+        }
+
+
     }
 }
 

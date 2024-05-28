@@ -34,5 +34,7 @@ namespace HRMS.Data
 
         public DbSet<AttendanceTbl> AttendanceTbls { get; set; }
 
+        public DbSet<EmployeeData> EmployeeDatas { get; set; }   
+
     }
 }
