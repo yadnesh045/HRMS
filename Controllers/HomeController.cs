@@ -245,7 +245,7 @@ namespace HRMS.Controllers
 
         [HttpGet]
         public IActionResult AddUser()
-         {
+        {
             var roles = unitofworks.Roles.GetAll().ToList();
             ViewBag.Roles = roles;
 
@@ -278,7 +278,7 @@ namespace HRMS.Controllers
 
                     MastersEducation = user.MastersEducation,
                     MastersUniversity = user.MastersUniversity,
-                    MastersPercentage = user.MastersPercentage, 
+                    MastersPercentage = user.MastersPercentage,
                     BachelorsEducation = user.BachelorsEducation,
                     BachelorsUniversity = user.BachelorsUniversity,
                     BachelorsPercentage = user.BachelorsPercentage,
@@ -390,6 +390,214 @@ namespace HRMS.Controllers
 
             return View();
         }
+
+
+
+
+
+        [HttpGet]
+        public IActionResult EditUser(int id)
+        {
+            var user = unitofworks.Users.GetByEmployeeID(id);
+            var roles = unitofworks.Roles.GetAll().ToList();
+            ViewBag.Roles = roles;
+            return View(user);
+        }
+
+
+        [HttpPost]
+        public IActionResult EditUser(User user)
+        {
+            if (user.EmployeeId != null)
+            {
+                var existingUser = unitofworks.Users.GetByEmployeeID(user.EmployeeId);
+                var userRole = unitofworks.UserRole.GetByEmail(user.Email);
+                if (existingUser == null)
+                {
+                    return Json(new { success = false, message = "User not found" });
+                }
+
+                existingUser.FullName = user.FullName;
+                existingUser.Contact = user.Contact;
+                existingUser.DateOfBirth = user.DateOfBirth;
+                existingUser.AadharNumber = user.AadharNumber;
+                existingUser.PancardNumber = user.PancardNumber;
+                existingUser.Email = user.Email;
+                existingUser.Address = user.Address;
+
+                existingUser.PreviousCompanyName = user.PreviousCompanyName;
+                existingUser.PreviousCompanyJobTitle = user.PreviousCompanyJobTitle;
+                existingUser.PreviousCompanyJoiningDate = user.PreviousCompanyJoiningDate;
+                existingUser.PreviousCompanyLeavingDate = user.PreviousCompanyLeavingDate;
+                existingUser.PreviousCompanyCTC = user.PreviousCompanyCTC;
+
+                existingUser.MastersEducation = user.MastersEducation;
+                existingUser.MastersUniversity = user.MastersUniversity;
+                existingUser.MastersPercentage = user.MastersPercentage;
+                existingUser.BachelorsEducation = user.BachelorsEducation;
+                existingUser.BachelorsUniversity = user.BachelorsUniversity;
+                existingUser.BachelorsPercentage = user.BachelorsPercentage;
+
+                existingUser.Role = user.Role;
+                existingUser.JobDescription = user.JobDescription;
+                existingUser.CurrentCTC = user.CurrentCTC;
+                existingUser.HouseRentAllowance = user.HouseRentAllowance;
+                existingUser.TravelAllowance = user.TravelAllowance;
+                existingUser.SpecialAllowance = user.SpecialAllowance;
+
+                existingUser.BankName = user.BankName;
+                existingUser.AccountHolderName = user.AccountHolderName;
+                existingUser.AccountNumber = user.AccountNumber;
+                existingUser.IFSCCode = user.IFSCCode;
+                existingUser.BranchName = user.BranchName;
+
+
+                userRole.RoleType = user.Role;
+
+                if (user.MastersCertificate != null)
+                {
+                    if (existingUser.MastersCertificateURL != null)
+                    {
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "MastersCertificates", existingUser.MastersCertificateURL.Split("/").Last());
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                        var file = user.MastersCertificate;
+                        var fileName = Guid.NewGuid().ToString() + file.FileName;
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "MastersCertificates", fileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+                        existingUser.MastersCertificateURL = Path.Combine("/Db_Images", "MastersCertificates", fileName).Replace("\\", "/"); ;
+
+                    }
+                }
+                else
+                {
+                   existingUser.MastersCertificateURL = existingUser.MastersCertificateURL;
+                }
+
+                if (user.BachelorsCertificate != null)
+                {
+                    if (existingUser.BachelorsCertificateURL != null)
+                    {
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "BachelorsCertificates", existingUser.BachelorsCertificateURL.Split("/").Last());
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                        var file = user.BachelorsCertificate;
+                        var fileName = Guid.NewGuid().ToString() + file.FileName;
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "BachelorsCertificates", fileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+                        existingUser.BachelorsCertificateURL = Path.Combine("/Db_Images", "BachelorsCertificates", fileName).Replace("\\", "/"); ;
+
+                    }
+                }
+                else
+                {
+                    existingUser.BachelorsCertificateURL = existingUser.BachelorsCertificateURL;
+                }
+
+                if (user.Resume != null)
+                {
+                    if (existingUser.ResumeURL != null)
+                    {
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "Resumes", existingUser.ResumeURL.Split("/").Last());
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                        var file = user.Resume;
+                        var fileName = Guid.NewGuid().ToString() + file.FileName;
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "Resumes", fileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+                        existingUser.ResumeURL = Path.Combine("/Db_Images", "Resumes", fileName).Replace("\\", "/"); ;
+
+                    }
+                }
+                else
+                {
+                    existingUser.ResumeURL = existingUser.ResumeURL;
+                }
+
+                if (user.AadharCard != null)
+                {
+                    if (existingUser.AadharCardURL != null)
+                    {
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "AadharCards", existingUser.AadharCardURL.Split("/").Last());
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                        var file = user.AadharCard;
+                        var fileName = Guid.NewGuid().ToString() + file.FileName;
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "AadharCards", fileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+                        existingUser.AadharCardURL = Path.Combine("/Db_Images", "AadharCards", fileName).Replace("\\", "/"); ;
+
+                    }
+                }
+                else
+                {
+                    existingUser.AadharCardURL = existingUser.AadharCardURL;
+                }
+
+                if (user.Photo != null)
+                {
+                    if (existingUser.PhotoURL != null)
+                    {
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "Photos", existingUser.PhotoURL.Split("/").Last());
+                        if (System.IO.File.Exists(path))
+                        {
+                            System.IO.File.Delete(path);
+                        }
+                        var file = user.Photo;
+                        var fileName = Guid.NewGuid().ToString() + file.FileName;
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Db_Images", "Photos", fileName);
+                        using (var fileStream = new FileStream(filePath, FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+                        existingUser.PhotoURL = Path.Combine("/Db_Images", "Photos", fileName).Replace("\\", "/"); ;
+
+                    }
+                }
+                else
+                {
+                    existingUser.PhotoURL = existingUser.PhotoURL;
+                }
+
+                unitofworks.Users.Update(existingUser);
+                unitofworks.UserRole.Update(userRole);
+                unitofworks.Save();
+                return Json(new
+                {
+                    success = true,
+                    message = "User Updated successfully"
+                });
+
+            }
+            return View();
+
+        }
+
+
+
+
+
+
 
         public int GenerateEmployeeID()
         {
@@ -609,7 +817,7 @@ namespace HRMS.Controllers
         {
             var candidate = unitofworks.Candidate.GetById(id);
 
-            if(candidate != null)
+            if (candidate != null)
             {
 
                 var Shortlist = new ShorList
@@ -633,7 +841,7 @@ namespace HRMS.Controllers
             }
 
             TempData["Error"] = "Error Occured";
-            return RedirectToAction("ManageCandidates" , "Home");
+            return RedirectToAction("ManageCandidates", "Home");
         }
 
 
@@ -705,7 +913,7 @@ namespace HRMS.Controllers
         [HttpGet]
         public IActionResult AddAttendance()
         {
-             var users = unitofworks.Users.GetAll().ToList();
+            var users = unitofworks.Users.GetAll().ToList();
             ViewBag.Users = users;
 
 
@@ -740,7 +948,7 @@ namespace HRMS.Controllers
 
 
         [HttpPost]
-        public IActionResult AddAttendance (Attendance attendance)
+        public IActionResult AddAttendance(Attendance attendance)
         {
             if (ModelState.IsValid)
             {

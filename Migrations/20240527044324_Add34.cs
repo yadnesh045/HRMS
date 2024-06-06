@@ -12,8 +12,6 @@ namespace HRMS.Migrations
         {
 
 
-          
-
             migrationBuilder.CreateTable(
                 name: "EmployeeDatas",
                 columns: table => new
@@ -45,8 +43,8 @@ namespace HRMS.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "EmployeeDatas");
+          
+
 
         }
     }
