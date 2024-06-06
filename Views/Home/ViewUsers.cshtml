@@ -22,6 +22,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/dist/css/adminlte.min.css">
+
+
+    <style>
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -70,45 +74,9 @@
                                                 <th>Employee ID</th>
                                                 <th>Full Name</th>
                                                 <th>Contact</th>
-                                                <th>Date Of Birth</th>
                                                 <th>Role</th>
-
                                                 <th>Actions</th>
-
-
-                                                <th>Current CTC</th>
-                                                <th>Aadhar Card Number</th>
-                                                <th>PanCard</th>
-                                                <th>Email</th>
-                                                <th>Address</th>
-                                                <th>PreviousCompanyName</th>
-                                                <th>PreviousCompanyJobTitle</th>
-                                                <th>PreviousCompanyJoiningDate</th>
-                                                <th>PreviousCompanyCTC</th>
-                                                <th>MastersEducation</th>
-                                                <th>MastersUniversity</th>
-                                                <th>Masters CGPA</th>
-
-                                                <th>MastersCertificate</th>
-                                                <th>BachelorsEducation</th>
-                                                <th>BachelorsUniversity</th>
-                                                <th>Bachelors CGPA</th>
-
-                                                <th>BachelorsCertificate</th>
-                                                <th>Resume</th>
-                                                <th>AadharCard</th>
-                                                <th>Photo</th>
-                                                <th>Role</th>
-                                                <th>JobDescription</th>
-                                                <th>CurrentCTC</th>
-                                                <th>HouseRentAllowance</th>
-                                                <th>TravelAllowance</th>
-                                                <th>SpecialAllowance</th>
-                                                <th>BankName</th>
-                                                <th>BranchName</th>
-                                                <th>AccountNumber</th>
-                                                <th>AccountHolderName</th>
-                                                <th>IFSCCode</th>
+                                        
                                                 <th>Password</th>
                                             </tr>
                                         </thead>
@@ -116,73 +84,17 @@
 
                                             @foreach (var user in Model)
                                             {
-
                                                 <tr>
                                                     <td>@user.EmployeeId</td>
                                                     <th>@user.FullName</th>
                                                     <td>@user.Contact</td>
-                                                    <td>@user.DateOfBirth</td>
                                                     <td>@user.Role</td>
                                                     <td>
-                                                        <a href="@Url.Action("EditUser", "Home", new { id = user.EmployeeId })" class="btn btn-primary"><i class="bi bi-pencil"></i></a>
-                                                        <a onclick="deleteUser(@user.EmployeeId)" class="btn btn-danger"><i class="bi bi-trash"></i></a>
+                                                        <a href="@Url.Action("EditUser", "Home", new { id = user.EmployeeId })" class="btn btn-primary rr"><i class="bi bi-pencil"></i></a>
+                                                        <a onclick="deleteUser(@user.EmployeeId)" class="btn btn-danger rr"><i class="bi bi-trash"></i></a> <br />
+                                                        <a href="@Url.Action("Index", "Rahul", new { id = user.EmployeeId , name = user.FullName })" class="btn btn-warning rr"><i class="bi bi-plus-circle-fill"></i></a>
+                                                        <a href="@Url.Action("Details", "Home", new { id = user.EmployeeId })" class="btn btn-success rr"><i class="bi bi-eye-fill"></i></a>
                                                     </td>
-
-                                                    <td>@user.CurrentCTC</td>
-                                                    <td>@user.AadharNumber</td>
-                                                    <td>@user.PancardNumber</td>
-                                                    <td>@user.Email</td>
-                                                    <td>@user.Address</td>
-                                                    <td>@user.PreviousCompanyName</td>
-                                                    <td>@user.PreviousCompanyJobTitle</td>
-                                                    <td>@user.PreviousCompanyJoiningDate</td>
-                                                    <td>@user.PreviousCompanyCTC</td>
-                                                    <td>@user.MastersEducation</td>
-                                                    <td>@user.MastersUniversity</td>
-                                                    <td>@user.MastersPercentage</td>
-
-
-                                                    <td>
-                                                        <a style="margin-left:35px;font-size:25px;" target="_blank" href="@user.MastersCertificateURL" class="bi bi-file-earmark-arrow-down-fill">   </a>
-                                                    </td>
-
-
-                                                    <td>@user.BachelorsEducation</td>
-                                                    <td>@user.BachelorsUniversity</td>
-                                                    <td>@user.BachelorsPercentage</td>
-
-                                                    <td>
-                                                        <a style="margin-left:35px;font-size:25px;" target="_blank" href="@user.BachelorsCertificateURL" class="bi bi-file-earmark-arrow-down-fill">   </a>
-                                                    </td>
-
-                                                    <td>
-                                                        <a style="margin-left:35px;font-size:25px;" target="_blank" href="@user.ResumeURL" class="bi bi-file-earmark-arrow-down-fill">   </a>
-                                                    </td>
-
-
-                                                    <td>
-                                                        <a style="margin-left:35px;font-size:25px;" target="_blank" href="@user.AadharCardURL" class="bi bi-file-earmark-arrow-down-fill">   </a>
-                                                    </td>
-
-
-
-                                                    <td>
-                                                        <a style="margin-left:35px;font-size:25px;" target="_blank" href="@user.PhotoURL" class="bi bi-file-earmark-arrow-down-fill">   </a>
-                                                    </td>
-
-
-
-                                                    <td>@user.Role</td>
-                                                    <td>@user.JobDescription</td>
-                                                    <td>@user.CurrentCTC</td>
-                                                    <td>@user.HouseRentAllowance</td>
-                                                    <td>@user.TravelAllowance</td>
-                                                    <td>@user.SpecialAllowance</td>
-                                                    <td>@user.BankName</td>
-                                                    <td>@user.BranchName</td>
-                                                    <td>@user.AccountNumber</td>
-                                                    <td>@user.AccountHolderName</td>
-                                                    <td>@user.IFSCCode</td>
                                                     <td>@user.Password</td>
                                                    
 
@@ -192,49 +104,7 @@
                                             }
 
                                         </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Employee ID</th>
-                                                <th>Full Name</th>
-                                                <th>Contact</th>
-                                                <th>Date Of Birth</th>
-                                                <th>Role</th>
-                                                <th>Current CTC</th>
-                                                <th>Aadhar Card Number</th>
-                                                <th>PanCard</th>
-                                                <th>Email</th>
-                                                <th>Address</th>
-                                                <th>PreviousCompanyName</th>
-                                                <th>PreviousCompanyJobTitle</th>
-                                                <th>PreviousCompanyJoiningDate</th>
-                                                <th>PreviousCompanyCTC</th>
-                                                <th>MastersEducation</th>
-                                                <th>MastersUniversity</th>
-                                                <th>MastersPercentage</th>
-                                                <th>Masters CGPA</th>
-                                                <th>BachelorsEducation</th>
-                                                <th>BachelorsUniversity</th>
-                                                <th>BachelorsPercentage</th>
-                                                <th>Bachelors CGPA</th>
-                                                <th>Resume</th>
-                                                <th>AadharCard</th>
-                                                <th>Photo</th>
-                                                <th>Role</th>
-                                                <th>JobDescription</th>
-                                                <th>CurrentCTC</th>
-                                                <th>HouseRentAllowance</th>
-                                                <th>TravelAllowance</th>
-                                                <th>SpecialAllowance</th>
-                                                <th>BankName</th>
-                                                <th>BranchName</th>
-                                                <th>AccountNumber</th>
-                                                <th>AccountHolderName</th>
-
-                                                <th>IFSCCode</th>
-                                                <th>Password</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </tfoot>
+                                 
                                     </table>
                                 </div>
                                 <!-- /.card-body -->

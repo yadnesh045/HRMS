@@ -5,6 +5,10 @@
     <input for="formFile" type="file" name="file" id="upload" class="form-control" />
 </div> *@
 
+@{
+    Layout = null;
+}
+
 ﻿@if (!string.IsNullOrEmpty(ViewBag.Message) && ViewBag.Message == "success")
 {
     <div class="alert alert-success" role="alert">

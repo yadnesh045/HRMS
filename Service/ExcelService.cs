@@ -16,15 +16,15 @@ namespace HRMS.Service
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         }
 
-        public async Task UploadExcelFile(Stream fileStream)
+        public async Task UploadExcelFile(string id, string name,Stream fileStream)
         {
             using (var package = new ExcelPackage(fileStream))
             {
                 var worksheet = package.Workbook.Worksheets[0];
 
                 // Read Employee Code and Name from the first row
-                var employeeCode = worksheet.Cells[1, 1].Text;
-                var employeeName = worksheet.Cells[1, 2].Text;
+                var employeeCode = id;
+                var employeeName = name;
 
                 // Read Data starting from the third row
                 for (int row = 3; row <= worksheet.Dimension.End.Row; row++)
@@ -44,15 +44,8 @@ namespace HRMS.Service
                         TotalDuration = worksheet.Cells[row, 9].Text,
                         LateBy = worksheet.Cells[row, 10].Text,
                         EarlyGoingBy = worksheet.Cells[row, 11].Text,
-
                         Status = worksheet.Cells[row, 12].Text,
                         PunchRecords = worksheet.Cells[row, 13].Text,
-                     
-
-
-
-
-
                         // Map additional columns as needed
                     };
                     _context.EmployeeDatas.Add(employeeData);
