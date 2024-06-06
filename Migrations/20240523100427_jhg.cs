@@ -10,22 +10,8 @@ namespace HRMS.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Assets",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    asset_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    category = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    serial_number = table.Column<int>(type: "int", nullable: false),
-                    quantitiy = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Assets", x => x.id);
-                });
+           
+           
 
             migrationBuilder.CreateTable(
                 name: "AttendanceTbls",
@@ -46,8 +32,7 @@ namespace HRMS.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Assets");
+           
 
             migrationBuilder.DropTable(
                 name: "AttendanceTbls");
