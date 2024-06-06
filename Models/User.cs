@@ -155,6 +155,8 @@ namespace HRMS.Models
 
         public string? IFSCCode { get; set; }
 
+
+
         // login credentials
         public string? Password { get; set; }
 

@@ -7,6 +7,7 @@ using HRMS.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
 
@@ -173,8 +174,11 @@ namespace HRMS.Controllers
 
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int id, string name)
         {
+
+            TempData["id"] = id;
+            TempData["name"] = name;
             return View();
         }
 
@@ -187,9 +191,16 @@ namespace HRMS.Controllers
                 return View("Index");
             }
 
+
+
+            string id = TempData["id"].ToString();
+            string name = TempData["name"].ToString();
+
+
+
             using (var stream = file.OpenReadStream())
             {
-                await _excelService.UploadExcelFile(stream);
+                await _excelService.UploadExcelFile(id, name,stream);
             }
 
             ViewBag.Message = "File uploaded and data stored successfully.";

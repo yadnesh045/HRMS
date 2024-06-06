@@ -10,7 +10,7 @@ namespace HRMS.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-           
+
 
           
 
@@ -45,9 +45,8 @@ namespace HRMS.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-          
-
-         
+            migrationBuilder.DropTable(
+                name: "EmployeeDatas");
 
         }
     }

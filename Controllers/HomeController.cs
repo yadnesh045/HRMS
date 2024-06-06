@@ -28,6 +28,16 @@ namespace HRMS.Controllers
             return View();
         }
 
+
+        public IActionResult Details(int id)
+        {
+
+            var emp = unitofworks.Users.GetByEmployeeID(id);
+
+            return View(emp);
+        }
+
+
         public IActionResult Privacy()
         {
             return View();
